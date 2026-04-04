@@ -89,6 +89,7 @@
         <a href="#">Data Produk</a>
         <a href="#">Transaksi</a>
         <a href="#">Laporan</a>
+        <a href="antrian.php">Antrian</a>
         <a href="#">Logout</a>
 
     </div>
@@ -109,11 +110,20 @@
            onclick="openSidebar()"
            style="font-size:30px; cursor:pointer; color:white; margin-right:15px;"></i>
 
-        <button class="btn btn-outline-light me-2">Semua</button>
-        <button class="btn btn-outline-light me-2">Isi 3</button>
-        <button class="btn btn-outline-light me-2">Isi 4</button>
-        <button class="btn btn-outline-light me-2">Isi 5</button>
-        <button class="btn btn-outline-light me-2">Sticky</button>
+        <button class="btn btn-outline-light me-2 kategori-btn active-kategori"
+        onclick="filterKategori('Semua', this)">Semua</button>
+
+        <button class="btn btn-outline-light me-2 kategori-btn"
+                onclick="filterKategori('isi3', this)">Isi 3</button>
+
+        <button class="btn btn-outline-light me-2 kategori-btn"
+                onclick="filterKategori('isi4', this)">Isi 4</button>
+
+        <button class="btn btn-outline-light me-2 kategori-btn"
+                onclick="filterKategori('isi5', this)">Isi 5</button>
+
+        <button class="btn btn-outline-light me-2 kategori-btn"
+                onclick="filterKategori('es', this)">Sticky Milk</button>
 
         <input type="text"
             id="searchProduk"
@@ -123,7 +133,15 @@
             onkeyup="searchProduk()">
 
         
-            <h3 class="text-white totantrian"><strong>Total Antrian : 19</strong></h3>
+            <h3 class="text-white totantrian"><strong>Total Antrian : <?php
+                    $q1 = mysqli_query($conn,"
+                        SELECT * FROM transaksi
+                        WHERE status='baru'
+                        ORDER BY id ASC
+                    ");
+
+                    echo mysqli_num_rows($q1);
+                    ?></strong></h3>
         
 
     </div>
@@ -144,7 +162,8 @@
                     $produk = mysqli_query($conn,"SELECT * FROM produk");
                     while($p = mysqli_fetch_array($produk)){
                     ?>
-                    <div class="col-md-3 mb-3 produk-item">
+                    <!-- <div class="col-md-3 mb-3 produk-item">-->
+                        <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['kategori']; ?>">
                         <div class="card p-2 pesanan">
                             <img src="assets/img/<?php echo $p['gambar']; ?>" height="120">
                             <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
@@ -181,15 +200,25 @@
             <div class="mb-2">
 
                 <div class="d-flex align-items-center gap-2">
+                    
 
-                    <input type="text" id="customer" name="customer" class="form-control namacust" placeholder="Nama Customer" required>
+                    <!-- <input type="text" id="customer" name="customer" class="form-control namacust" placeholder="Nama Customer" required> -->
+                    <input type="text" id="customer" name="customer" 
+                    class="form-control namacust"
+                    placeholder="Nama Customer"
+                    required
+                    onkeydown="handleEnter(event)">
 
-                    <button class="btn p-1 mx-1" onclick="">
-                    <i class="bi bi-cart3" style="font-size:28px; color:#198754;"></i>
-                    <!-- <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        0
-                    </span> -->
-                    </button>
+                    <div class="position-relative">
+
+                        <a href=""><i class="bi bi-cart3" style="font-size:28px; color:#198754;"></i></a>
+
+                        <span id="badgeCart"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+
+                    </div>
                     
 
                 </div>
@@ -264,6 +293,36 @@ function tambahKeranjang(id,nama,harga){
 
     tampilkanKeranjang();
 }
+function filterKategori(kategori, tombol){
+
+    let items = document.querySelectorAll(".produk-item");
+
+    items.forEach(item => {
+        let kat = item.getAttribute("data-kategori");
+
+        if(kategori === "Semua" || kat === kategori){
+            item.style.display = "";
+        }else{
+            item.style.display = "none";
+        }
+    });
+
+    let semuaTombol = document.querySelectorAll(".kategori-btn");
+
+    semuaTombol.forEach(btn => {
+        btn.classList.remove("btn-light");
+        btn.classList.add("btn-outline-light");
+    });
+
+    tombol.classList.remove("btn-outline-light");
+    tombol.classList.add("btn-light");
+}
+function handleEnter(event){
+    if(event.key === "Enter"){
+        event.preventDefault();
+        cekSimpan();
+    }
+}
 
 function tambahQty(index){
     keranjang[index].qty++;
@@ -283,7 +342,21 @@ function cekSimpan(){
         return;
     }
 
-    document.getElementById("formKasir").submit();
+    let formData = new FormData(document.getElementById("formkasir"));
+
+    fetch('simpan_transaksi.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert("Pesanan berhasil disimpan");
+        window.location='index.php';
+
+        keranjang = [];
+        tampilkanKeranjang();
+        document.getElementById("customer").value = "";
+    });
 }
 
 function batalKeranjang(){
@@ -377,6 +450,8 @@ function tampilkanKeranjang(){
     document.getElementById("total").innerText = total.toLocaleString('id-ID');
     document.getElementById("totalInput").value = total;
     document.getElementById("dataKeranjang").value = JSON.stringify(keranjang);
+    let totalQty = keranjang.reduce((sum,item)=> sum + item.qty,0);
+    document.getElementById("badgeCart").innerText = totalQty;
 }
 </script>
 
