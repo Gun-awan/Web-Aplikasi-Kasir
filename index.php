@@ -85,8 +85,8 @@
         <h4 class="text-white">Menu Kasir</h4>
         <hr class="text-white">
 
-        <a href="#">Dashboard</a>
-        <a href="#">Data Produk</a>
+        <a href="dashboard.php">Dashboard</a>
+        <a href="barang.php">Data Produk</a>
         <a href="#">Transaksi</a>
         <a href="#">Laporan</a>
         <a href="antrian.php">Antrian</a>

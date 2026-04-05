@@ -39,8 +39,6 @@ WHERE status='selesai'
         margin-top: 10px;
     }
     
-
-
 * {
     padding: 0;
     margin: 0;
@@ -51,13 +49,7 @@ WHERE status='selesai'
 }
 
 .sidebar {
-    width: 300px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: rgb(25, 27, 25);
-    z-index: 100;
+    overflow: hidden;
 }
 
 .sidebar-brand {
@@ -103,8 +95,8 @@ WHERE status='selesai'
 
 .main-content {
     margin-left: 300px;
+    transition: margin-left 0.4s ease;
 }
-
 header {
     background: #fffefe;
     display: flex;
@@ -116,6 +108,7 @@ header {
     width: calc(100% - 300px);
     top: 0;
     z-index: 100;
+    transition: left 0.4s ease, width 0.4s ease;
 }
 
 header h2 {
@@ -249,14 +242,45 @@ table{
   background: rgb(25, 27, 25);
     color: white;
 }
+#nav-toggle {
+    display: none;
+}
+#nav-toggle:checked + .sidebar {
+    width: 70px;
+}
+#nav-toggle:checked + .sidebar .sidebar-brand,
+#nav-toggle:checked + .sidebar li {
+    padding-left: 1rem;
+    text-align: center;
+}
+#nav-toggle:checked + .sidebar li a span:last-child {
+    display: none;
+}
+#nav-toggle:checked ~ .main-content {
+    margin-left: 70px;
+}
+#nav-toggle:checked ~ .main-content header {
+    left: 70px;
+    width: calc(100% - 70px);
+}
+#nav-toggle:checked + .sidebar li a {
+    padding-left: 0;
+}
+#nav-toggle:checked + .sidebar .brand-text {
+    display: none;
+}
+
     
   </style>
 </head>
 <body>
-
+<input type="checkbox" id="nav-toggle">
   <div class="sidebar">
     <div class="sidebar-brand">
-      <h2><span class="lab la-accusoft"></span>Sistem Kasirku</h2>
+      <h2>
+        <span class="lab la-accusoft"></span>
+        <span class="brand-text">The Cashier</span>
+    </h2>
     </div>
     <div class="sidebar-menu">
       <ul>
@@ -269,11 +293,11 @@ table{
             <span>Customer</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-clipboard-list"></span>
-            <span>Stock</span></a>
+          <a href="barang.php"> <span class="las la-clipboard-list"></span>
+            <span>Produk</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-shopping-bag"></span>
+          <a href="antrian.php"> <span class="las la-shopping-bag"></span>
             <span>Orders</span></a>
         </li>
         <li>
@@ -281,13 +305,14 @@ table{
             <span>Inventory</span></a>
         </li>
         <li>
+          <a href="index.php"> <span class="las la-money-bill-wave"></span>
+            <span>Transaksi</span></a>
+        </li>
+        <li>
           <a href=""> <span class="las la-user-circle"></span>
             <span>Account</span></a>
         </li>
-        <li>
-          <a href=""> <span class="las la-money-bill-wave"></span>
-            <span>Finance</span></a>
-        </li>
+        
       </ul>
     </div>
   </div>
@@ -295,15 +320,15 @@ table{
   <div class="main-content">
     <header>
         <h2>
-          <label for="">
+          <label for="nav-toggle">
             <span class="las la-bars"></span>
           </label>
           Dashboard
         </h2>
-        <div class="search-wrapper">
+        <!-- <div class="search-wrapper">
           <span class="las la-search"></span>
           <input type="search" placeholder="Search here"/>
-        </div>
+        </div> -->
         <div class="user-wrapper">
           <img src="img" width="40px" height="40px" alt="">
           <div>
