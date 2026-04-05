@@ -165,7 +165,7 @@
                     <!-- <div class="col-md-3 mb-3 produk-item">-->
                         <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['kategori']; ?>">
                         <div class="card p-2 pesanan">
-                            <img src="assets/img/<?php echo $p['gambar']; ?>" height="120">
+                            <img src="image/<?php echo $p['gambar']; ?>" height="120">
                             <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
                             <p>Rp<?php echo number_format($p['harga']); ?></p>
                             <button class="btn btn-primary"
