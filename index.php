@@ -3,10 +3,19 @@
 <html>
 <head>
     <title>Kasir</title>
+    <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" >
+  <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <style>
+        body{
+            margin: 0px;
+        }
+        .container-fluid{
+    padding-left:0 !important;
+    padding-right:0 !important;
+}
 .navbar input{
     border-radius: 4px;
     flex:none;
@@ -19,6 +28,7 @@
     box-shadow:0 2px 6px rgba(0,0,0,0.15);
     overflow-x:auto;
     white-space:nowrap;
+    height: 75px;
 }
 .btn-warning{
     margin-left: 20px;
@@ -72,7 +82,60 @@
     margin-right: 29px;
 }
 .totantrian{
-    margin-left: 100px;
+    padding-left: 120px;
+}
+.produk{
+    background: #80878d;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+.besar{
+    background: #eaebec;
+}
+.pesanan{
+    background: #ffffff;
+    color: rgb(25, 27, 25);
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.la-users{
+    color: #ffffff;
+    padding-left: 90px;
+}
+.nama-produk{
+    margin-top: 3px;
+}
+</style>
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+}
+
+.container-fluid{
+    padding:0 !important;
+}
+
+.row{
+    --bs-gutter-x:0;
+    --bs-gutter-y:0;
+}
+
+.col-md-8,
+.col-md-4{
+    padding:0;
+}
+
+.produk{
+    background: #80878d;
+    border-radius:0;
+    height:100%;
+    margin-right: 30px;
+}
+.nol{
+    margin-right: 15px;
 }
 </style>
 </head>
@@ -84,11 +147,6 @@
 
         <h4 class="text-white">Menu Kasir</h4>
         <hr class="text-white">
-
-        <a href="dashboard.php">Dashboard</a>
-        <a href="barang.php">Data Produk</a>
-        <a href="#">Transaksi</a>
-        <a href="#">Laporan</a>
         <a href="antrian.php">Antrian</a>
         <a href="#">Logout</a>
 
@@ -99,11 +157,11 @@
 <!-- Overlay -->
 <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
 
-<div class="container-fluid">
+<div class="container-fluid besar">
 
 <!-- Navbar -->
             
-            <nav class="navbar sticky-top px-3 mb-2" style="background:#4fc3f7; z-index:1000;">
+            <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
     <div class="d-flex flex-nowrap align-items-center w-100">
 
         <i class="bi bi-list"
@@ -141,7 +199,9 @@
                     ");
 
                     echo mysqli_num_rows($q1);
-                    ?></strong></h3>
+                    ?></strong>
+                    </h3>
+                    <h2><a href="antrian.php"><span class="las la-users"></span></a></h2>
         
 
     </div>
@@ -151,7 +211,7 @@
         <!-- Area Produk -->
         <div class="col-md-8 d-flex flex-column">
 
-    <div class="card rounded-3 shadow-sm h-100">
+    <div class="card rounded-3 shadow-sm h-100 produk">
 
         <div class="card-body">
 
@@ -165,10 +225,11 @@
                     <!-- <div class="col-md-3 mb-3 produk-item">-->
                         <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['kategori']; ?>">
                         <div class="card p-2 pesanan">
-                            <img src="image/<?php echo $p['gambar']; ?>" height="120">
+                            <img src="image/<?php echo $p['gambar']; ?>" height="120"
+                                style="border-radius:15px; object-fit:cover;">
                             <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
                             <p>Rp<?php echo number_format($p['harga']); ?></p>
-                            <button class="btn btn-primary"
+                            <button class="btn btn-dark"
                                 onclick="tambahKeranjang(
                                     <?php echo $p['id']; ?>,
                                     '<?php echo $p['nama']; ?>',
@@ -209,9 +270,9 @@
                     required
                     onkeydown="handleEnter(event)">
 
-                    <div class="position-relative">
+                    <div class="position-relative nol">
 
-                        <a href=""><i class="bi bi-cart3" style="font-size:28px; color:#198754;"></i></a>
+                        <i class="bi bi-cart" style="font-size:28px; color:grey;"></i>
 
                         <span id="badgeCart"
                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -235,8 +296,8 @@
             <input type="hidden" name="total" id="totalInput">
 
             <div class="d-flex gap-2">
-                <button type="button" class="btn btn-danger w-50" onclick="batalKeranjang()">Batal</button>
-                <button type="button" class="btn btn-success w-50" onclick="cekSimpan()">Simpan</button>
+                <button type="button" class="btn btn-dark w-50" onclick="batalKeranjang()">Batal</button>
+                <button type="button" class="btn btn-dark w-50" onclick="cekSimpan()">Simpan</button>
             </div>
 
         </form>
