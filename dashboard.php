@@ -30,6 +30,7 @@ WHERE status='selesai'
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" >
   <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
   <link rel="stylesheet" href="style/main.css">
@@ -41,6 +42,45 @@ WHERE status='selesai'
     background: #ffffff88;
     color: rgb(25, 27, 25);
     border-radius: 30px 0px 0px 30px;
+}
+.stats-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:20px;
+}
+
+.stat-card{
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    padding:10px;
+    padding-bottom: 2px;
+    background:white;
+}
+.pendapatan{
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    padding:0px;
+    padding-bottom: 2px;
+    background:rgb(25, 27, 25);
+    color: white;
+}
+
+.card-body h2{
+  margin-top: 2px;
+    font-size:24px;
+    margin:0px;
+    color:rgb(8, 8, 8);
+}
+.card-body h3{
+    margin:0px;
+    color:rgb(241, 241, 241);
+}
+
+.card-body small{
+    color:gray;
+}
+.card-header h3{
+  font-family: 'Poppins', sans-serif;
 }
   </style>
 </head>
@@ -65,7 +105,7 @@ WHERE status='selesai'
             <span>Produk</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-shopping-bag"></span>
+          <a href="antrian.php"> <span class="las la-shopping-bag"></span>
             <span>Order</span></a>
         </li>
         <li>
@@ -88,7 +128,7 @@ WHERE status='selesai'
     <header>
       <h2>
         <label for="nav-toggle">
-          <span class="las la-bars"></span>
+          <span class="las la-igloo"></span>
         </label>
         Dashboard
       </h2>
@@ -109,11 +149,11 @@ WHERE status='selesai'
       <div class="cards">
         <div class="card-singel">
           <div>
-            <span>Customers</span>
+            <span>Favourite Toping</span>
             <h1 class="text-das"><?php echo $customer['total']; ?></h1>
           </div>
           <div>
-            <span class="las la-users icon"></span>
+            <span class="lar la-heart icon"></span>
           </div>
         </div>
         <div class="card-singel card-produk">
@@ -145,30 +185,80 @@ WHERE status='selesai'
         </div>
       </div>
       <div class="recent-grid">
-        <div class="projects">
-          <div class="card">
+
+    <div class="stats-grid">
+
+        <div class="card stat-card">
             <div class="card-header">
-              <h3>Statistic</h3>
-              <button>
-                See All <span class="las la-arrow-right"></span>
-              </button>
+                <h3>Transaksi Hari Ini</h3>
+                <p>2-Mar-2026</p>
             </div>
-
-
-            <div class="customers"></div>
-            <div class="card">
-              <div class="card-header">
-                <h3>New Customer</h3>
-
-                <button>See All <span class="las la-arrow-right">
-
-                  </span></button>
-              </div>
-
-
+            <div class="card-body">
+                <h2>25</h2>
+                <small>Total transaksi hari ini</small>
             </div>
-          </div>
         </div>
+
+        <div class="card stat-card">
+            <div class="card-header">
+                <h3>Transaksi Minggu Ini</h3>
+            </div>
+            <div class="card-body">
+                <h2>120</h2>
+                <small>Total transaksi minggu ini</small>
+            </div>
+        </div>
+
+        <div class="card stat-card">
+            <div class="card-header">
+                <h3>Transaksi Bulan Ini</h3>
+                <p>Maret</p>
+            </div>
+            <div class="card-body">
+                <h2>480</h2>
+                <small>Total transaksi bulan ini</small>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="recent-grid">
+
+    <div class="stats-grid">
+
+        <div class="card stat-card pendapatan">
+            <div class="card-header">
+                <h5>Pendapatan Hari Ini</h5>
+                <p>2-Mar-2026</p>
+            </div>
+            <div class="card-body">
+                <h3>Rp 1.000.000</h3>
+            </div>
+        </div>
+
+        <div class="card stat-card pendapatan">
+            <div class="card-header">
+                <h5>Pendapatan Minggu Ini</h5>
+            </div>
+            <div class="card-body">
+                <h3>Rp 1.000.000</h3>
+            </div>
+        </div>
+
+        <div class="card stat-card pendapatan">
+            <div class="card-header">
+                <h5>Pendapatan Bulan Ini</h5>
+                <p>Maret</p>
+            </div>
+            <div class="card-body">
+                <h3>Rp 1.000.000</h3>
+            </div>
+        </div>
+
+    </div>
+
+</div>
     </main>
   </div>
 </body>

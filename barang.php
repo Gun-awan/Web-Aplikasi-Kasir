@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produk</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
   <link rel="stylesheet" href="style/main.css">
@@ -165,6 +166,7 @@
       text-decoration: none;
       padding-left: 0px;
     }
+    
   </style>
 
   </style>
@@ -191,7 +193,7 @@
             <span>Produk</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-shopping-bag"></span>
+          <a href="antrian.php"> <span class="las la-shopping-bag"></span>
             <span>Order</span></a>
         </li>
         <li>
@@ -212,8 +214,8 @@
 
   <div class="main-content">
     <header>
-      <h2> <label for="nav-toggle"> <span class="las la-bars"></span> </label>Data Produk</h2>
-      <div class="search-wrapper"> <span class="las la-search"></span> <input type="search" placeholder="Search here" /> </div>
+      <h2> <label for="nav-toggle"> <span class="las la-clipboard-list"></span> </label>Data Produk</h2>
+      <div class="search-wrapper"> <span class="las la-search"></span> <input type="text" id="searchProduk" placeholder="Search here" onkeyup="searchProduk()"> </div>
     </header>
     <main>
       <div class="card p-4"> <button class="btn btn-dark mb-3" onclick="openModal('tambahModal')"> Tambah Barang </button>
@@ -357,7 +359,10 @@ if(isset($_POST['simpan'])){
     mysqli_query($conn,"INSERT INTO produk(nama,harga,kategori,gambar)
     VALUES('$nama','$harga','$kategori','$gambar')");
 
-    echo "<script>location='barang.php';</script>";
+    echo "<script>
+alert('Barang berhasil ditambahkan');
+location='barang.php';
+</script>";
 }
 
 if(isset($_POST['edit'])){
@@ -386,7 +391,10 @@ if(isset($_POST['edit'])){
             WHERE id='$id'");
     }
 
-    echo "<script>location='barang.php';</script>";
+    echo "<script>
+alert('Barang berhasil diupdate');
+location='barang.php';
+</script>";
 }
 ?>
 
@@ -409,6 +417,23 @@ if(isset($_POST['edit'])){
     </form>
   </div>
 </div>
+<script>
+function searchProduk() {
+    let input = document.getElementById("searchProduk").value.toLowerCase();
+    let rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(function(row) {
+        let nama = row.cells[0].innerText.toLowerCase();
+        let kategori = row.cells[2].innerText.toLowerCase();
+
+        if (nama.includes(input) || kategori.includes(input)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+</script>
 
 <script>
 function openModal(id){

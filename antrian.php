@@ -7,6 +7,7 @@
     <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" >
   <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body{
@@ -125,7 +126,6 @@ html, body{
     <div class="p-3">
 
         <h4 class="text-white">Menu Kasir</h4>
-        <hr class="text-white">
         <a href="index.php">Kasir</a>
         <a href="#">Logout</a>
 

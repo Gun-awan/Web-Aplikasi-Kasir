@@ -8,6 +8,8 @@ DELETE FROM produk
 WHERE id='$id'
 ");
 
-header("Location: barang.php");
-exit;
+echo "<script>
+alert('Barang berhasil dihapus');
+location='barang.php';
+</script>";
 ?>
