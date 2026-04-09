@@ -283,21 +283,14 @@ function searchNama(){
 </script>
 
 <script>
-
 function updateStatus(id,status){
-
-    fetch('update_status.php',{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/x-www-form-urlencoded'
-        },
-        body:'id='+id+'&status='+status
-    })
-    .then(response=>response.text())
-    .then(data=>{
-        location.reload();
-    });
+    window.location.href='update_status.php?id='+id+'&status='+status;
 }
+</script>
+
+<script>
+
+
 
 function cetakStruk(id){
     window.open('cetak_struk.php?id='+id,'_blank');
