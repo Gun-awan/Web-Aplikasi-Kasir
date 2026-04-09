@@ -198,7 +198,7 @@
         </li>
         <li>
           <a href=""> <span class="las la-receipt"></span>
-            <span>Inventory</span></a>
+            <span>Cashier</span></a>
         </li>
         <li>
           <a href=""> <span class="las la-user-circle"></span>

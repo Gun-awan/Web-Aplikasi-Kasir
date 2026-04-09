@@ -59,7 +59,7 @@ WHERE status='selesai'
 .pendapatan{
     border-radius:15px;
     box-shadow:0 4px 12px rgba(0,0,0,0.12);
-    padding:0px;
+    padding-left:px;
     padding-bottom: 2px;
     background:rgb(25, 27, 25);
     color: white;
@@ -81,6 +81,9 @@ WHERE status='selesai'
 }
 .card-header h3{
   font-family: 'Poppins', sans-serif;
+}
+.judul{
+    height: 72px;
 }
   </style>
 </head>
@@ -110,7 +113,7 @@ WHERE status='selesai'
         </li>
         <li>
           <a href=""> <span class="las la-receipt"></span>
-            <span>Inventory</span></a>
+            <span>Cashier</span></a>
         </li>
         <li>
           <a href=""> <span class="las la-user-circle"></span>
@@ -125,7 +128,7 @@ WHERE status='selesai'
   </div>
 
   <div class="main-content">
-    <header>
+    <header class="judul">
       <h2>
         <label for="nav-toggle">
           <span class="las la-igloo"></span>
@@ -137,7 +140,7 @@ WHERE status='selesai'
           <input type="search" placeholder="Search here"/>
         </div> -->
       <div class="user-wrapper">
-        <img src="img" width="40px" height="40px" alt="">
+        <img src="" width="40px" height="40px" alt="">
         <div>
           <h4>Admin</h4>
           <small>Admin</small>
