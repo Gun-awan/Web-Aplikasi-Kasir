@@ -67,22 +67,21 @@
                     onclick="updateStatus(<?php echo $t['id']; ?>,'pending')">
                     Pending
                 </button>
-
-                <button class="btn btn-success"
-                    onclick="updateStatus(<?php echo $t['id']; ?>,'selesai')">
-                    Selesai
-                </button>
+                <a href="hapus_antrian.php?id=<?php echo $t['id']; ?>"
+                   class="btn btn-danger"
+                   onclick="return confirm('Hapus antrian ini?')">
+                   Delete
+                </a>
 
                 <button class="btn btn-dark"
                     onclick="cetakStruk(<?php echo $t['id']; ?>)">
                     Cetak Struk
                 </button>
 
-                <a href="hapus_antrian.php?id=<?php echo $t['id']; ?>"
-                   class="btn btn-danger"
-                   onclick="return confirm('Hapus antrian ini?')">
-                   Delete
-                </a>
+                <button class="btn btn-success"
+                    onclick="updateStatus(<?php echo $t['id']; ?>,'selesai')">
+                    Selesai
+                </button>
 
             </div>
 

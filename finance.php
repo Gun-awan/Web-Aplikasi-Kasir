@@ -56,6 +56,14 @@ table th{
 .judul{
     height: 72px;
 }
+.export-btn{
+    margin-bottom: 10px;
+}
+.sidebar-menu a:hover{
+    background: #ffffff88;
+    color: rgb(25, 27, 25);
+    border-radius: 30px 0px 0px 30px;
+}
 .judul span{
     padding-right: 25px;
 }
@@ -76,6 +84,26 @@ table th{
     <div class="sidebar-menu">
         <ul>
             <li><a href="dashboard.php"><span class="las la-igloo"></span><span> Dashboard</span></a></li>
+            <li>
+          <a href=""> <span class="las la-users"></span>
+            <span>Customer</span></a>
+        </li>
+        <li>
+          <a href="barang.php"> <span class="las la-clipboard-list"></span>
+            <span>Produk</span></a>
+        </li>
+        <li>
+          <a href="antrian.php"> <span class="las la-shopping-bag"></span>
+            <span>Order</span></a>
+        </li>
+        <li>
+          <a href="index.php"> <span class="las la-receipt"></span>
+            <span>Cashier</span></a>
+        </li>
+        <li>
+          <a href=""> <span class="las la-user-circle"></span>
+            <span>Account</span></a>
+        </li>
             <li><a href="finance.php" class="active"><span class="las la-money-bill-wave"></span><span> Finance</span></a></li>
         </ul>
     </div>
