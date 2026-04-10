@@ -106,11 +106,15 @@ html, body{
     margin:0;
     padding:0;
     height:100%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .container-fluid{
     padding:0 !important;
+}
+
+.container{
+    border-radius: 25px;
 }
 
 .row{
@@ -125,10 +129,15 @@ html, body{
 .card{
     margin-left: 10px;
     margin-right: 10px;
+    
 }
 .master{
     margin-left: 17px;
     margin-top: 350px;
+}
+.p-3{
+    border-radius: 20px 20px 0 0;
+    
 }
 </style>
 </head>
@@ -184,44 +193,58 @@ html, body{
 
         <!-- Antrian Sekarang -->
         <div class="col-md-4">
-            <div class="card shadow-sm rounded-4 p-3">
-                <h5>Antrian Sekarang : 
-                    <?php
-                    $q1 = mysqli_query($conn,"
-                        SELECT * FROM transaksi
-                        WHERE status='baru'
-                        ORDER BY id ASC
-                    ");
+    <div class="card shadow-sm rounded-4">
 
-                    echo mysqli_num_rows($q1);
-                    ?>
-                </h5>
-
+        <!-- HEADER (TIDAK IKUT SCROLL) -->
+        <div class="p-3 border-bottom bg-white" style="position: sticky; top: 0; z-index: 10;">
+            <h5 class="mb-0">
+                Antrian Sekarang :
                 <?php
-                while($t = mysqli_fetch_array($q1)){
+                $q1 = mysqli_query($conn,"
+                    SELECT * FROM transaksi
+                    WHERE status='baru'
+                    ORDER BY id ASC
+                ");
+                echo mysqli_num_rows($q1);
                 ?>
-                    <button class="btn btn-primary w-100 mb-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal<?php echo $t['id']; ?>">
-                        <?php echo $t['customer']; ?>
-                    </button>
-
-                    <?php include 'modal_antrian.php'; ?>
-
-                <?php } ?>
-            </div>
+            </h5>
         </div>
+
+        <!-- BODY (YANG DI SCROLL) -->
+        <div class="p-3" style="overflow-y:auto; height:calc(100vh - 180px);">
+
+            <?php
+            while($t = mysqli_fetch_array($q1)){
+            ?>
+                <button class="btn btn-primary w-100 mb-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal<?php echo $t['id']; ?>">
+                    <?php echo $t['customer']; ?>
+                </button>
+
+                <?php include 'modal_antrian.php'; ?>
+
+            <?php } ?>
+
+        </div>
+
+    </div>
+</div>
 
         <!-- Pending -->
         <div class="col-md-4">
-            <div class="card shadow-sm rounded-4 p-3">
-                <h5>Antrian Pending :
+            <div class="card shadow-sm rounded-4">
+                <div class="p-3 border-bottom bg-white" style="position: sticky; top: 0; z-index: 10;">
+            <h5 class="mb-0">
+                Antrian Pending :
                     <?php
                     $q2 = mysqli_query($conn,"SELECT * FROM transaksi WHERE status='pending'");
                     echo mysqli_num_rows($q2);
                     ?>
                 </h5>
-
+                </div>
+                
+                <div class="p-3" style="overflow-y:auto; height:calc(100vh - 180px);">
                 <?php
                 while($t = mysqli_fetch_array($q2)){
                 ?>
@@ -234,19 +257,24 @@ html, body{
                     <?php include 'modal_antrian.php'; ?>
 
                 <?php } ?>
+                </div>
             </div>
         </div>
 
         <!-- Selesai -->
         <div class="col-md-4">
-            <div class="card shadow-sm rounded-4 p-3">
-                <h5>Antrian Selesai :
+            <div class="card shadow-sm rounded-4">
+                <div class="p-3 border-bottom bg-white" style="position: sticky; top: 0; z-index: 10;">
+            <h5 class="mb-0">
+                Antrian Selesai :
                     <?php
                     $q3 = mysqli_query($conn,"SELECT * FROM transaksi WHERE status='selesai'");
                     echo mysqli_num_rows($q3);
                     ?>
                 </h5>
+                </div>
 
+                <div class="p-3" style="overflow-y:auto; height:calc(100vh - 180px);">
                 <?php
                 while($t = mysqli_fetch_array($q3)){
                 ?>
@@ -259,6 +287,7 @@ html, body{
                     <?php include 'modal_antrian.php'; ?>
 
                 <?php } ?>
+                </div>
             </div>
         </div>
 

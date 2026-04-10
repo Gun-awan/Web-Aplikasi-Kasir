@@ -208,16 +208,16 @@
                     onclick="filterKategori('Semua', this)">Semua</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('isi3', this)">Isi 3</button>
+                    onclick="filterKategori('1', this)">Isi 3</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('isi4', this)">Isi 4</button>
+                    onclick="filterKategori('2', this)">Isi 4</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('isi5', this)">Isi 5</button>
+                    onclick="filterKategori('3', this)">Isi 5</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('es', this)">Sticky Milk</button>
+                    onclick="filterKategori('4', this)">Sticky Milk</button>
 
                 <input type="text"
                     id="searchProduk"
@@ -259,7 +259,7 @@
                                 while ($p = mysqli_fetch_array($produk)) {
                                 ?>
                                     <!-- <div class="col-md-3 mb-3 produk-item">-->
-                                    <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['kategori']; ?>">
+                                    <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['id_kategori']; ?>">
                                         <div class="card p-2 pesanan">
                                             <img src="image/<?php echo $p['gambar']; ?>" height="120"
                                                 style="border-radius:15px; object-fit:cover;">
