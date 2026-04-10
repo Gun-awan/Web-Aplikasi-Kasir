@@ -181,11 +181,12 @@
             <h4 class="text-white">Menu Kasir</h4>
             <hr class="text-white">
             <a href="antrian.php">Antrian</a>
-            <a href="#">Logout</a>
+            <a href="dashboard.php">Data Master</a>
+            
 
         </div>
         <div class="master">
-            <a href="#">Data Master</a>
+          <a href="#">Logout</a>  
         </div>
 
     </div>

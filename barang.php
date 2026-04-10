@@ -142,7 +142,16 @@
       background: #ffc107;
       color: black;
     }
+    .btn-warning:hover {
+      background: #f7d570;
+      color: black;
+    }
 
+    .btn-danger:hover {
+      background: #f0717d;
+      color: white;
+      text-decoration: none;
+    }
     .btn-danger {
       background: #dc3545;
       color: white;
@@ -151,6 +160,11 @@
 
     .btn-dark {
       background: rgb(25, 27, 25);
+      color: white;
+    }
+
+    .btn-dark:hover{
+      background: rgb(96, 99, 96);
       color: white;
     }
 
@@ -219,6 +233,7 @@
         <table class="table table-bordered align-middle">
           <thead class="table-dark">
             <tr>
+              <th>No.</th>
               <th>Nama Barang</th>
               <th>Harga</th>
               <th>Kategori</th>
@@ -231,9 +246,11 @@ SELECT produk.*, kategori.kategori
 FROM produk
 JOIN kategori ON produk.id_kategori = kategori.id_kategori
 ");
+                $no =1;
                   while ($d = mysqli_fetch_array($q)) { ?>
 
               <tr>
+                <td><?php echo $no++; ?></td>
                 <td><?php echo $d['nama']; ?></td>
                 <td>Rp <?php echo number_format($d['harga']); ?></td>
                 <td><?php echo $d['kategori']; ?></td>
