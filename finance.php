@@ -14,6 +14,7 @@
         .finance-grid {
             display: grid;
             gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
         }
 
         .finance-card {
@@ -21,6 +22,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
             padding: 20px;
+            height: 432px;
         }
 
         .finance-card h3 {

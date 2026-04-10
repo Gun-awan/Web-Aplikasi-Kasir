@@ -63,10 +63,10 @@
                 <div class="mt-3">
 
                     <label>Bayar</label>
-                    <input type="number"
+                    <input type="text"
                         class="form-control"
                         id="bayar<?php echo $t['id']; ?>"
-                        onkeyup="hitungKembalian(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)"
+                        onkeyup="formatRupiah(this); hitungKembalian(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)"
                         placeholder="Masukkan nominal bayar">
 
                 </div>
@@ -75,7 +75,7 @@
 
                     <?php if ($t['status'] == 'selesai') { ?>
 
-                        <h5>Bayar : Rp <?php echo number_format($t['bayar']); ?></h5>
+                        <h5>Bayar : Rp <?php echo ($t['bayar']); ?></h5>
                         <h5>Kembalian : Rp <?php echo number_format($t['kembalian']); ?></h5>
 
                     <?php } else { ?>
@@ -117,7 +117,7 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     function hitungKembalian(id, total) {
 
         let bayar = document.getElementById('bayar' + id).value;
@@ -136,13 +136,57 @@
             hasil.innerHTML = 'Sisa kurang : Rp ' + Math.abs(selisih).toLocaleString();
         }
     }
+</script> -->
+<script>
+    function hitungKembalian(id, total) {
+
+        let bayarInput = document.getElementById('bayar' + id).value;
+
+        // HAPUS TITIK
+        let bayar = bayarInput.replace(/\./g, '');
+
+        let hasil = document.getElementById('hasil' + id);
+
+        let selisih = bayar - total;
+
+        if (bayar == '') {
+            hasil.innerHTML = 'Kembalian : Rp 0';
+            return;
+        }
+
+        if (selisih >= 0) {
+            hasil.innerHTML = 'Kembalian : Rp ' + selisih.toLocaleString();
+        } else {
+            hasil.innerHTML = 'Sisa kurang : Rp ' + Math.abs(selisih).toLocaleString();
+        }
+    }
+</script>
+<!-- Format baru-->
+<script>
+    function formatRupiah(input) {
+        let angka = input.value.replace(/[^,\d]/g, '').toString();
+        let split = angka.split(',');
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        input.value = rupiah;
+    }
 </script>
 <script>
     function simpanPembayaran(id, total) {
 
-        let bayar = document.getElementById('bayar' + id).value;
+        let bayarInput = document.getElementById('bayar' + id).value;
 
-        if (bayar == '') {
+        // hapus titik lalu ubah ke number
+        let bayar = parseInt(bayarInput.replace(/\./g, '')) || 0;
+
+        if (bayar === 0) {
             alert('Input bayar dulu');
             return;
         }
