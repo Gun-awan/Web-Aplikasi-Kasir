@@ -100,10 +100,6 @@ WHERE status='selesai'
             <span>Dashboard</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-users"></span>
-            <span>Customer</span></a>
-        </li>
-        <li>
           <a href="barang.php"> <span class="las la-clipboard-list"></span>
             <span>Produk</span></a>
         </li>
@@ -112,16 +108,16 @@ WHERE status='selesai'
             <span>Order</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-receipt"></span>
+          <a href="index.php"> <span class="las la-receipt"></span>
             <span>Cashier</span></a>
         </li>
         <li>
+          <a href="finance.php"> <span class="las la-money-bill-wave"></span>
+            <span>Finance</span></a>
+            <li>
           <a href=""> <span class="las la-user-circle"></span>
             <span>Account</span></a>
         </li>
-        <li>
-          <a href=""> <span class="las la-money-bill-wave"></span>
-            <span>Finance</span></a>
         </li>
       </ul>
     </div>

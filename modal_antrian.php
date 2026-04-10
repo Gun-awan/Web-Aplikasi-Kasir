@@ -73,18 +73,18 @@
 
                 <div class="mt-3">
 
-<?php if($t['status']=='selesai'){ ?>
+                    <?php if ($t['status'] == 'selesai') { ?>
 
-    <h5>Bayar : Rp <?php echo number_format($t['bayar']); ?></h5>
-    <h5>Kembalian : Rp <?php echo number_format($t['kembalian']); ?></h5>
+                        <h5>Bayar : Rp <?php echo number_format($t['bayar']); ?></h5>
+                        <h5>Kembalian : Rp <?php echo number_format($t['kembalian']); ?></h5>
 
-<?php } else { ?>
+                    <?php } else { ?>
 
-    <h5 id="hasil<?php echo $t['id']; ?>">Kembalian : Rp 0</h5>
+                        <h5 id="hasil<?php echo $t['id']; ?>">Kembalian : Rp 0</h5>
 
-<?php } ?>
+                    <?php } ?>
 
-</div>
+                </div>
 
             </div>
 
@@ -108,9 +108,9 @@
                 </button>
 
                 <button class="btn btn-success"
-onclick="simpanPembayaran(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)">
-    Selesai
-</button>
+                    onclick="simpanPembayaran(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)">
+                    Selesai
+                </button>
 
             </div>
 
@@ -118,46 +118,46 @@ onclick="simpanPembayaran(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)">
     </div>
 </div>
 <script>
-function hitungKembalian(id,total){
+    function hitungKembalian(id, total) {
 
-    let bayar = document.getElementById('bayar'+id).value;
-    let hasil = document.getElementById('hasil'+id);
+        let bayar = document.getElementById('bayar' + id).value;
+        let hasil = document.getElementById('hasil' + id);
 
-    let selisih = bayar - total;
+        let selisih = bayar - total;
 
-    if(bayar == ''){
-        hasil.innerHTML = 'Kembalian : Rp 0';
-        return;
+        if (bayar == '') {
+            hasil.innerHTML = 'Kembalian : Rp 0';
+            return;
+        }
+
+        if (selisih >= 0) {
+            hasil.innerHTML = 'Kembalian : Rp ' + selisih.toLocaleString();
+        } else {
+            hasil.innerHTML = 'Sisa kurang : Rp ' + Math.abs(selisih).toLocaleString();
+        }
     }
-
-    if(selisih >= 0){
-        hasil.innerHTML = 'Kembalian : Rp ' + selisih.toLocaleString();
-    }else{
-        hasil.innerHTML = 'Sisa kurang : Rp ' + Math.abs(selisih).toLocaleString();
-    }
-}
 </script>
 <script>
-function simpanPembayaran(id,total){
+    function simpanPembayaran(id, total) {
 
-    let bayar = document.getElementById('bayar'+id).value;
+        let bayar = document.getElementById('bayar' + id).value;
 
-    if(bayar == ''){
-        alert('Input bayar dulu');
-        return;
+        if (bayar == '') {
+            alert('Input bayar dulu');
+            return;
+        }
+
+        if (bayar < total) {
+            alert('Uang bayar kurang');
+            return;
+        }
+
+        let kembalian = bayar - total;
+
+        window.location.href =
+            'update_status.php?id=' + id +
+            '&status=selesai' +
+            '&bayar=' + bayar +
+            '&kembalian=' + kembalian;
     }
-
-    if(bayar < total){
-    alert('Uang bayar kurang');
-    return;
-}
-
-    let kembalian = bayar - total;
-
-    window.location.href =
-    'update_status.php?id='+id+
-    '&status=selesai'+
-    '&bayar='+bayar+
-    '&kembalian='+kembalian;
-}
 </script>

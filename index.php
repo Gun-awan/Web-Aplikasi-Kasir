@@ -1,14 +1,15 @@
 <?php include 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Kasir</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" >
-  <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-     <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" >
-  <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,461 +18,482 @@
 
 
     <style>
-        body{
+        body {
             margin: 0px;
-    font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif;
 
         }
-        .container-fluid{
-    padding-left:0 !important;
-    padding-right:0 !important;
-}
-.navbar input{
-    border-radius: 4px;
-    flex:none;
-}
 
-.navbar button{
-    min-width:100px;
-}
-.navbar{
-    box-shadow:0 2px 6px rgba(0,0,0,0.15);
-    overflow-x:auto;
-    white-space:nowrap;
-    height: 75px;
-}
-.btn-warning{
-    margin-left: 20px;
-   
-}
-.sidebar{
-    position:fixed;
-    top:0;
-    left:-250px;
-    width:250px;
-    height:100%;
-    background:#212529;
-    transition:0.3s;
-    z-index:2000;
-}
+        .container-fluid {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
 
-.sidebar a{
-    display:block;
-    color:white;
-    padding:12px;
-    text-decoration:none;
-    border-radius:5px;
-    margin-bottom:5px;
-}
+        .navbar input {
+            border-radius: 4px;
+            flex: none;
+        }
 
-.sidebar a:hover{
-    background:#343a40;
-}
+        .navbar button {
+            min-width: 100px;
+        }
 
-.overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.4);
-    display:none;
-    z-index:1500;
-}
-.namacust{
-    border-radius: 25px;
-}
+        .navbar {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+            white-space: nowrap;
+            height: 75px;
+        }
 
-.bi-list{
-    margin-left: 8px;
-}
-::-webkit-scrollbar {
-    width: 6px;
-}
-.plus{
-    margin-right: 29px;
-}
-.totantrian{
-    padding-left: 120px;
-}
-.produk{
-    background: #80878d;
-    margin-top: 15px;
-    margin-left: 15px;
-}
-.besar{
-    background: #eaebec;
-}
-.pesanan{
-    background: #ffffff;
-    color: rgb(25, 27, 25);
-    margin-left: 8px;
-    margin-right: 8px;
-}
-.la-users{
-    color: #ffffff;
-    padding-left: 90px;
-}
-.nama-produk{
-    margin-top: 3px;
-}
-</style>
-<style>
-html, body{
-    margin:0;
-    padding:0;
-    height:100%;
-    overflow:hidden;
-}
+        .btn-warning {
+            margin-left: 20px;
 
-.container-fluid{
-    padding:0 !important;
-}
+        }
 
-.row{
-    --bs-gutter-x:0;
-    --bs-gutter-y:0;
-}
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: #212529;
+            transition: 0.3s;
+            z-index: 2000;
+        }
 
-.col-md-8,
-.col-md-4{
-    padding:0;
-}
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
 
-.produk{
-    background: #80878d;
-    border-radius:0;
-    height:100%;
-    margin-right: 30px;
-}
-.nol{
-    margin-right: 15px;
-}
-.master{
-    margin-left: 17px;
-    margin-top: 350px;
-}
-</style>
+        .sidebar a:hover {
+            background: #343a40;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            z-index: 1500;
+        }
+
+        .namacust {
+            border-radius: 25px;
+        }
+
+        .bi-list {
+            margin-left: 8px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .plus {
+            margin-right: 29px;
+        }
+
+        .totantrian {
+            padding-left: 120px;
+        }
+
+        .produk {
+            background: #80878d;
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .besar {
+            background: #eaebec;
+        }
+
+        .pesanan {
+            background: #ffffff;
+            color: rgb(25, 27, 25);
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        .la-users {
+            color: #ffffff;
+            padding-left: 90px;
+        }
+
+        .nama-produk {
+            margin-top: 3px;
+        }
+    </style>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .container-fluid {
+            padding: 0 !important;
+        }
+
+        .row {
+            --bs-gutter-x: 0;
+            --bs-gutter-y: 0;
+        }
+
+        .col-md-8,
+        .col-md-4 {
+            padding: 0;
+        }
+
+        .produk {
+            background: #80878d;
+            border-radius: 0;
+            height: 100%;
+            margin-right: 30px;
+        }
+
+        .nol {
+            margin-right: 15px;
+        }
+
+        .master {
+            margin-left: 17px;
+            margin-top: 350px;
+        }
+    </style>
 </head>
+
 <body>
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
 
-    <div class="p-3">
+        <div class="p-3">
 
-        <h4 class="text-white">Menu Kasir</h4>
-        <hr class="text-white">
-        <a href="antrian.php">Antrian</a>
-        <a href="#">Logout</a>
+            <h4 class="text-white">Menu Kasir</h4>
+            <hr class="text-white">
+            <a href="antrian.php">Antrian</a>
+            <a href="#">Logout</a>
+
+        </div>
+        <div class="master">
+            <a href="#">Data Master</a>
+        </div>
 
     </div>
-    <div class="master">
-    <a href="#">Data Master</a>
-    </div>
 
-</div>
+    <!-- Overlay -->
+    <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
 
-<!-- Overlay -->
-<div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+    <div class="container-fluid besar">
 
-<div class="container-fluid besar">
+        <!-- Navbar -->
 
-<!-- Navbar -->
-            
-            <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
-    <div class="d-flex flex-nowrap align-items-center w-100">
+        <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
+            <div class="d-flex flex-nowrap align-items-center w-100">
 
-        <i class="bi bi-list"
-           onclick="openSidebar()"
-           style="font-size:30px; cursor:pointer; color:white; margin-right:15px;"></i>
+                <i class="bi bi-list"
+                    onclick="openSidebar()"
+                    style="font-size:30px; cursor:pointer; color:white; margin-right:15px;"></i>
 
-        <button class="btn btn-outline-light me-2 kategori-btn active-kategori"
-        onclick="filterKategori('Semua', this)">Semua</button>
+                <button class="btn btn-outline-light me-2 kategori-btn active-kategori"
+                    onclick="filterKategori('Semua', this)">Semua</button>
 
-        <button class="btn btn-outline-light me-2 kategori-btn"
-                onclick="filterKategori('isi3', this)">Isi 3</button>
+                <button class="btn btn-outline-light me-2 kategori-btn"
+                    onclick="filterKategori('isi3', this)">Isi 3</button>
 
-        <button class="btn btn-outline-light me-2 kategori-btn"
-                onclick="filterKategori('isi4', this)">Isi 4</button>
+                <button class="btn btn-outline-light me-2 kategori-btn"
+                    onclick="filterKategori('isi4', this)">Isi 4</button>
 
-        <button class="btn btn-outline-light me-2 kategori-btn"
-                onclick="filterKategori('isi5', this)">Isi 5</button>
+                <button class="btn btn-outline-light me-2 kategori-btn"
+                    onclick="filterKategori('isi5', this)">Isi 5</button>
 
-        <button class="btn btn-outline-light me-2 kategori-btn"
-                onclick="filterKategori('es', this)">Sticky Milk</button>
+                <button class="btn btn-outline-light me-2 kategori-btn"
+                    onclick="filterKategori('es', this)">Sticky Milk</button>
 
-        <input type="text"
-            id="searchProduk"
-            class="form-control mx-2"
-            style="width:260px; flex:0 0 260px;"
-            placeholder="Cari produk..."
-            onkeyup="searchProduk()">
+                <input type="text"
+                    id="searchProduk"
+                    class="form-control mx-2"
+                    style="width:260px; flex:0 0 260px;"
+                    placeholder="Cari produk..."
+                    onkeyup="searchProduk()">
 
-        
-            <h3 class="text-white totantrian"><strong>Total Antrian : <?php
-                    $q1 = mysqli_query($conn,"
+
+                <h3 class="text-white totantrian"><strong>Total Antrian : <?php
+                                                                            $q1 = mysqli_query($conn, "
                         SELECT * FROM transaksi
                         WHERE status='baru'
                         ORDER BY id ASC
                     ");
 
-                    echo mysqli_num_rows($q1);
-                    ?></strong>
-                    </h3>
-                    <h2><a href="antrian.php"><span class="las la-users"></span></a></h2>
-        
+                                                                            echo mysqli_num_rows($q1);
+                                                                            ?></strong>
+                </h3>
+                <h2><a href="antrian.php"><span class="las la-users"></span></a></h2>
 
-    </div>
-</nav>
-    <div class="row align-items-start" style="height:calc(100vh - 70px);">
 
-        <!-- Area Produk -->
-        <div class="col-md-8 d-flex flex-column">
+            </div>
+        </nav>
+        <div class="row align-items-start" style="height:calc(100vh - 70px);">
 
-    <div class="card rounded-3 shadow-sm h-100 produk">
+            <!-- Area Produk -->
+            <div class="col-md-8 d-flex flex-column">
 
-        <div class="card-body">
+                <div class="card rounded-3 shadow-sm h-100 produk">
 
-            <div style="overflow-y:scroll; height:calc(100vh - 140px);">
-                <div class="row">
+                    <div class="card-body">
 
-                    <?php
-                    $produk = mysqli_query($conn,"SELECT * FROM produk");
-                    while($p = mysqli_fetch_array($produk)){
-                    ?>
-                    <!-- <div class="col-md-3 mb-3 produk-item">-->
-                        <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['kategori']; ?>">
-                        <div class="card p-2 pesanan">
-                            <img src="image/<?php echo $p['gambar']; ?>" height="120"
-                                style="border-radius:15px; object-fit:cover;">
-                            <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
-                            <p>Rp<?php echo number_format($p['harga']); ?></p>
-                            <button class="btn btn-dark"
-                                onclick="tambahKeranjang(
+                        <div style="overflow-y:scroll; height:calc(100vh - 140px);">
+                            <div class="row">
+
+                                <?php
+                                $produk = mysqli_query($conn, "SELECT * FROM produk");
+                                while ($p = mysqli_fetch_array($produk)) {
+                                ?>
+                                    <!-- <div class="col-md-3 mb-3 produk-item">-->
+                                    <div class="col-md-3 mb-3 produk-item" data-kategori="<?php echo $p['kategori']; ?>">
+                                        <div class="card p-2 pesanan">
+                                            <img src="image/<?php echo $p['gambar']; ?>" height="120"
+                                                style="border-radius:15px; object-fit:cover;">
+                                            <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
+                                            <p>Rp<?php echo number_format($p['harga']); ?></p>
+                                            <button class="btn btn-dark"
+                                                onclick="tambahKeranjang(
                                     <?php echo $p['id']; ?>,
                                     '<?php echo $p['nama']; ?>',
                                     <?php echo $p['harga']; ?>
                                 )">
-                                Tambah
-                            </button>
+                                                Tambah
+                                            </button>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+
+                            </div>
                         </div>
-                    </div>
-                    <?php } ?>
-
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-        <!-- Keranjang -->
-        
-        <div class="col-md-4 position-sticky" style="top:70px; height:calc(100vh - 70px);">
-
-    <div class="p-3 d-flex flex-column h-100">
-
-        <form id="formkasir" action="simpan_transaksi.php" method="POST" class="d-flex flex-column h-100">
-
-            <div class="mb-2">
-
-                <div class="d-flex align-items-center gap-2">
-                    
-
-                    <!-- <input type="text" id="customer" name="customer" class="form-control namacust" placeholder="Nama Customer" required> -->
-                    <input type="text" id="customer" name="customer" 
-                    class="form-control namacust"
-                    placeholder="Nama Customer"
-                    required
-                    onkeydown="handleEnter(event)">
-
-                    <div class="position-relative nol">
-
-                        <i class="bi bi-cart" style="font-size:28px; color:grey;"></i>
-
-                        <span id="badgeCart"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0
-                        </span>
 
                     </div>
-                    
 
                 </div>
 
             </div>
 
-            <div id="cartArea" class="flex-grow-1 overflow-y-scroll">
-                <div id="cart"></div>
+            <!-- Keranjang -->
+
+            <div class="col-md-4 position-sticky" style="top:70px; height:calc(100vh - 70px);">
+
+                <div class="p-3 d-flex flex-column h-100">
+
+                    <form id="formkasir" action="simpan_transaksi.php" method="POST" class="d-flex flex-column h-100">
+
+                        <div class="mb-2">
+
+                            <div class="d-flex align-items-center gap-2">
+
+
+                                <!-- <input type="text" id="customer" name="customer" class="form-control namacust" placeholder="Nama Customer" required> -->
+                                <input type="text" id="customer" name="customer"
+                                    class="form-control namacust"
+                                    placeholder="Nama Customer"
+                                    required
+                                    onkeydown="handleEnter(event)">
+
+                                <div class="position-relative nol">
+
+                                    <i class="bi bi-cart" style="font-size:28px; color:grey;"></i>
+
+                                    <span id="badgeCart"
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        0
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div id="cartArea" class="flex-grow-1 overflow-y-scroll">
+                            <div id="cart"></div>
+                        </div>
+
+                        <h4 class="mt-3">Total: Rp <span id="total">0</span></h4>
+
+                        <input type="hidden" name="data" id="dataKeranjang">
+                        <input type="hidden" name="total" id="totalInput">
+
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-dark w-50" onclick="batalKeranjang()">Batal</button>
+                            <button type="button" class="btn btn-dark w-50" onclick="cekSimpan()">Simpan</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
             </div>
+            <script>
+                function openSidebar() {
+                    document.getElementById("sidebar").style.left = "0";
+                    document.getElementById("overlay").style.display = "block";
+                }
 
-            <h4 class="mt-3">Total: Rp <span id="total">0</span></h4>
+                function closeSidebar() {
+                    document.getElementById("sidebar").style.left = "-250px";
+                    document.getElementById("overlay").style.display = "none";
+                }
+            </script>
 
-            <input type="hidden" name="data" id="dataKeranjang">
-            <input type="hidden" name="total" id="totalInput">
+            <script>
+                function searchProduk() {
+                    let input = document.getElementById("searchProduk").value.toLowerCase();
+                    let items = document.querySelectorAll(".produk-item");
 
-            <div class="d-flex gap-2">
-                <button type="button" class="btn btn-dark w-50" onclick="batalKeranjang()">Batal</button>
-                <button type="button" class="btn btn-dark w-50" onclick="cekSimpan()">Simpan</button>
-            </div>
+                    items.forEach(item => {
+                        let nama = item.querySelector(".nama-produk").innerText.toLowerCase();
 
-        </form>
+                        if (nama.includes(input)) {
+                            item.style.display = "";
+                        } else {
+                            item.style.display = "none";
+                        }
+                    });
+                }
+            </script>
 
-    </div>
+            <script>
+                let keranjang = [];
 
-</div>
-        <script>
-function openSidebar(){
-    document.getElementById("sidebar").style.left = "0";
-    document.getElementById("overlay").style.display = "block";
-}
+                function tambahKeranjang(id, nama, harga) {
 
-function closeSidebar(){
-    document.getElementById("sidebar").style.left = "-250px";
-    document.getElementById("overlay").style.display = "none";
-}
-</script>
+                    let existing = keranjang.find(item => item.id == id);
 
-<script>
-function searchProduk(){
-    let input = document.getElementById("searchProduk").value.toLowerCase();
-    let items = document.querySelectorAll(".produk-item");
+                    if (existing) {
+                        existing.qty++;
+                    } else {
+                        keranjang.push({
+                            id: id,
+                            nama: nama,
+                            harga: harga,
+                            qty: 1
+                        });
+                    }
 
-    items.forEach(item=>{
-        let nama = item.querySelector(".nama-produk").innerText.toLowerCase();
+                    tampilkanKeranjang();
+                }
 
-        if(nama.includes(input)){
-            item.style.display = "";
-        }else{
-            item.style.display = "none";
-        }
-    });
-}
-</script>
+                function filterKategori(kategori, tombol) {
 
-<script>
-let keranjang = [];
+                    let items = document.querySelectorAll(".produk-item");
 
-function tambahKeranjang(id,nama,harga){
+                    items.forEach(item => {
+                        let kat = item.getAttribute("data-kategori");
 
-    let existing = keranjang.find(item => item.id == id);
+                        if (kategori === "Semua" || kat === kategori) {
+                            item.style.display = "";
+                        } else {
+                            item.style.display = "none";
+                        }
+                    });
 
-    if(existing){
-        existing.qty++;
-    }else{
-        keranjang.push({
-            id:id,
-            nama:nama,
-            harga:harga,
-            qty:1
-        });
-    }
+                    let semuaTombol = document.querySelectorAll(".kategori-btn");
 
-    tampilkanKeranjang();
-}
-function filterKategori(kategori, tombol){
+                    semuaTombol.forEach(btn => {
+                        btn.classList.remove("btn-light");
+                        btn.classList.add("btn-outline-light");
+                    });
 
-    let items = document.querySelectorAll(".produk-item");
+                    tombol.classList.remove("btn-outline-light");
+                    tombol.classList.add("btn-light");
+                }
 
-    items.forEach(item => {
-        let kat = item.getAttribute("data-kategori");
+                function handleEnter(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        cekSimpan();
+                    }
+                }
 
-        if(kategori === "Semua" || kat === kategori){
-            item.style.display = "";
-        }else{
-            item.style.display = "none";
-        }
-    });
+                function tambahQty(index) {
+                    keranjang[index].qty++;
+                    tampilkanKeranjang();
+                }
 
-    let semuaTombol = document.querySelectorAll(".kategori-btn");
+                function cekSimpan() {
 
-    semuaTombol.forEach(btn => {
-        btn.classList.remove("btn-light");
-        btn.classList.add("btn-outline-light");
-    });
+                    let customer = document.getElementById("customer").value.trim();
 
-    tombol.classList.remove("btn-outline-light");
-    tombol.classList.add("btn-light");
-}
-function handleEnter(event){
-    if(event.key === "Enter"){
-        event.preventDefault();
-        cekSimpan();
-    }
-}
+                    if (keranjang.length === 0) {
+                        alert("Pilih produk terlebih dahulu");
+                        return;
+                    }
 
-function tambahQty(index){
-    keranjang[index].qty++;
-    tampilkanKeranjang();
-}
-function cekSimpan(){
+                    if (customer === "") {
+                        alert("Nama customer harus diisi");
+                        return;
+                    }
 
-    let customer = document.getElementById("customer").value.trim();
+                    let formData = new FormData(document.getElementById("formkasir"));
 
-    if(keranjang.length === 0){
-        alert("Pilih produk terlebih dahulu");
-        return;
-    }
+                    fetch('simpan_transaksi.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            alert("Pesanan berhasil disimpan");
+                            window.location = 'index.php';
 
-    if(customer === ""){
-        alert("Nama customer harus diisi");
-        return;
-    }
+                            keranjang = [];
+                            tampilkanKeranjang();
+                            document.getElementById("customer").value = "";
+                        });
+                }
 
-    let formData = new FormData(document.getElementById("formkasir"));
+                function batalKeranjang() {
+                    if (confirm("Batalkan Pesanan?")) {
+                        keranjang = [];
+                        tampilkanKeranjang();
 
-    fetch('simpan_transaksi.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        alert("Pesanan berhasil disimpan");
-        window.location='index.php';
+                        document.getElementById("customer").value = "";
+                    }
+                }
 
-        keranjang = [];
-        tampilkanKeranjang();
-        document.getElementById("customer").value = "";
-    });
-}
+                function kurangQty(index) {
+                    if (keranjang[index].qty > 1) {
+                        keranjang[index].qty--;
+                    } else {
+                        keranjang.splice(index, 1);
+                    }
 
-function batalKeranjang(){
-    if(confirm("Batalkan Pesanan?")){
-        keranjang = [];
-        tampilkanKeranjang();
+                    tampilkanKeranjang();
+                }
 
-        document.getElementById("customer").value = "";
-    }
-}
+                function hapusItem(index) {
+                    keranjang.splice(index, 1);
+                    tampilkanKeranjang();
+                }
 
-function kurangQty(index){
-    if(keranjang[index].qty > 1){
-        keranjang[index].qty--;
-    }else{
-        keranjang.splice(index,1);
-    }
+                function tampilkanKeranjang() {
+                    let html = "";
+                    let total = 0;
 
-    tampilkanKeranjang();
-}
+                    keranjang.forEach((item, index) => {
 
-function hapusItem(index){
-    keranjang.splice(index,1);
-    tampilkanKeranjang();
-}
+                        let subtotal = item.harga * item.qty;
+                        total += subtotal;
 
-function tampilkanKeranjang(){
-    let html = "";
-    let total = 0;
 
-    keranjang.forEach((item,index)=>{
-
-        let subtotal = item.harga * item.qty;
-        total += subtotal;
-
-        
-        html += `
+                        html += `
 <div class="py-2 border-bottom">
 
     <div class="d-flex justify-content-between align-items-center">
@@ -521,19 +543,20 @@ function tampilkanKeranjang(){
 
 </div>
 `;
-        
-    });
 
-    document.getElementById("cart").innerHTML = html;
-    document.getElementById("total").innerText = total.toLocaleString('id-ID');
-    document.getElementById("totalInput").value = total;
-    document.getElementById("dataKeranjang").value = JSON.stringify(keranjang);
-    let totalQty = keranjang.reduce((sum,item)=> sum + item.qty,0);
-    document.getElementById("badgeCart").innerText = totalQty;
-}
-</script>
+                    });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    document.getElementById("cart").innerHTML = html;
+                    document.getElementById("total").innerText = total.toLocaleString('id-ID');
+                    document.getElementById("totalInput").value = total;
+                    document.getElementById("dataKeranjang").value = JSON.stringify(keranjang);
+                    let totalQty = keranjang.reduce((sum, item) => sum + item.qty, 0);
+                    document.getElementById("badgeCart").innerText = totalQty;
+                }
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
