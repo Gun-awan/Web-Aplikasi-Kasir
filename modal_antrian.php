@@ -196,6 +196,12 @@
             return;
         }
 
+         let konfirmasi = confirm('Yakin, selesaikan pembayaran?');
+
+    if (!konfirmasi) {
+        return; // kalau klik Cancel → berhenti
+    }
+
         let kembalian = bayar - total;
 
         window.location.href =
