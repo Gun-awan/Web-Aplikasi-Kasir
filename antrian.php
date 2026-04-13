@@ -222,7 +222,7 @@ html, body{
                 <button class="btn btn-primary w-100 mb-2"
                     data-bs-toggle="modal"
                     data-bs-target="#modal<?php echo $t['id']; ?>">
-                    <?php echo $t['customer']; ?>
+                    <?php echo ucwords(strtolower($t['customer'])); ?>
                 </button>
 
                 <?php include 'modal_antrian.php'; ?>
@@ -253,7 +253,7 @@ html, body{
                     <button class="btn btn-warning w-100 mb-2"
                         data-bs-toggle="modal"
                         data-bs-target="#modal<?php echo $t['id']; ?>">
-                        <?php echo $t['customer']; ?>
+                        <?php echo ucwords(strtolower($t['customer'])); ?>
                     </button>
 
                     <?php include 'modal_antrian.php'; ?>
@@ -283,7 +283,7 @@ html, body{
                     <button class="btn btn-success w-100 mb-2"
                         data-bs-toggle="modal"
                         data-bs-target="#modal<?php echo $t['id']; ?>">
-                        <?php echo $t['customer']; ?>
+                        <?php echo ucwords(strtolower($t['customer'])); ?>
                     </button>
 
                     <?php include 'modal_antrian.php'; ?>

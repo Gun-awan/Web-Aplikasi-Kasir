@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reload Antrian</title>
+    <title>Antrian</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" >
   <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
@@ -222,7 +222,7 @@ html, body{
                 <button class="btn btn-primary w-100 mb-2"
                     data-bs-toggle="modal"
                     data-bs-target="#modal<?php echo $t['id']; ?>">
-                    <?php echo $t['customer']; ?>
+                    <?php echo ucwords(strtolower($t['customer'])); ?>
                 </button>
 
                 <?php include 'modal_antrian.php'; ?>
@@ -253,7 +253,7 @@ html, body{
                     <button class="btn btn-warning w-100 mb-2"
                         data-bs-toggle="modal"
                         data-bs-target="#modal<?php echo $t['id']; ?>">
-                        <?php echo $t['customer']; ?>
+                        <?php echo ucwords(strtolower($t['customer'])); ?>
                     </button>
 
                     <?php include 'modal_antrian.php'; ?>
@@ -283,7 +283,7 @@ html, body{
                     <button class="btn btn-success w-100 mb-2"
                         data-bs-toggle="modal"
                         data-bs-target="#modal<?php echo $t['id']; ?>">
-                        <?php echo $t['customer']; ?>
+                        <?php echo ucwords(strtolower($t['customer'])); ?>
                     </button>
 
                     <?php include 'modal_antrian.php'; ?>

@@ -92,7 +92,7 @@
             <div class="modal-footer border-0">
 
                 <button class="btn btn-warning"
-                    onclick="updateStatus(<?php echo $t['id']; ?>,'pending')">
+                    onclick="return confirm('Yakin, Pending Antrian?') && updateStatus(<?php echo $t['id']; ?>,'pending')">
                     Pending
                 </button>
 
@@ -117,26 +117,7 @@
         </div>
     </div>
 </div>
-<!-- <script>
-    function hitungKembalian(id, total) {
 
-        let bayar = document.getElementById('bayar' + id).value;
-        let hasil = document.getElementById('hasil' + id);
-
-        let selisih = bayar - total;
-
-        if (bayar == '') {
-            hasil.innerHTML = 'Kembalian : Rp 0';
-            return;
-        }
-
-        if (selisih >= 0) {
-            hasil.innerHTML = 'Kembalian : Rp ' + selisih.toLocaleString();
-        } else {
-            hasil.innerHTML = 'Sisa kurang : Rp ' + Math.abs(selisih).toLocaleString();
-        }
-    }
-</script> -->
 <script>
     function hitungKembalian(id, total) {
 

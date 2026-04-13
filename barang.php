@@ -11,26 +11,24 @@
   <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
   <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
   <link rel="stylesheet" href="style/main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-    }
 
     .modal-content {
       background: white;
-      width: 400px;
-      margin: 8% auto;
+
       padding: 20px;
       border-radius: 15px;
       position: relative;
     }
+    .modal.fade .modal-dialog {
+    transform: scale(0.9);
+    transition: 0.3s ease;
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1);
+}
 
     .close {
       position: absolute;
@@ -60,7 +58,6 @@
   <style>
     body {
       margin: 0;
-
       background: #eaebec;
     }
 
@@ -73,9 +70,8 @@
       border: 1px solid #ccc;
       border-radius: 25px;
       height: 40px;
-      display: flex;
-      align-items: center;
       overflow-x: hidden;
+      margin-right: 50px;
     }
 
     .search-wrapper span {
@@ -86,7 +82,7 @@
 
     .search-wrapper input {
       height: 100%;
-      padding: .5rem;
+      padding: 5px;
       border: none;
       outline: none;
     }
@@ -142,6 +138,7 @@
       background: #ffc107;
       color: black;
     }
+
     .btn-warning:hover {
       background: #f7d570;
       color: black;
@@ -152,6 +149,7 @@
       color: white;
       text-decoration: none;
     }
+
     .btn-danger {
       background: #dc3545;
       color: white;
@@ -161,9 +159,11 @@
     .btn-dark {
       background: rgb(25, 27, 25);
       color: white;
+      width: 180px;
+      height: 40px;
     }
 
-    .btn-dark:hover{
+    .btn-dark:hover {
       background: rgb(96, 99, 96);
       color: white;
     }
@@ -177,13 +177,24 @@
     .btn-sm {
       font-size: 13px;
     }
-
-    .sidebar menu li a {
-      text-decoration: none;
-      padding-left: 0px;
+    .sidebar-menu li a {
+  text-decoration: none !important;
+  padding-right: 90px !important;
+}
+    header h4{
+      margin-top: 3px;
+      margin-left: 0px;
+      margin-bottom: 2px;
     }
-  </style>
-
+    header{
+      height: 72px;
+    }
+    header h4 strong{
+      margin-left: 5px;
+    }
+    .sidebar-brand{
+      margin-top: 4px;
+    }
   </style>
 </head>
 
@@ -191,7 +202,7 @@
 
   <div class="sidebar">
     <div class="sidebar-brand">
-      <h2><span class="lab la-accusoft"></span>The Cashier</h2>
+      <h4><strong><span class="lab la-accusoft"></span>The Cashier</strong></h4>
     </div>
     <div class="sidebar-menu">
       <ul>
@@ -212,8 +223,12 @@
             <span>Cashier</span></a>
         </li>
         <li>
+          <a href="transaksi.php"> <span class="las la-receipt"></span>
+            <span>Transaksi</span></a>
+        </li>
+        <li>
           <a href="finance.php"> <span class="las la-money-bill-wave"></span>
-            <span>Finance</span></a>
+            <span>Income</span></a>
         </li>
         <li>
           <a href=""> <span class="las la-user-circle"></span>
@@ -225,11 +240,23 @@
 
   <div class="main-content">
     <header>
-      <h2> <label for="nav-toggle"> <span class="las la-clipboard-list"></span> </label>Data Produk</h2>
+      <h4> <label for="nav-toggle"> <span class="las la-clipboard-list"></span> </label><strong>Data Produk</strong></h4>
       <div class="search-wrapper"> <span class="las la-search"></span> <input type="text" id="searchProduk" placeholder="Search here" onkeyup="searchProduk()"> </div>
+      <div class="user-wrapper">
+        <img src="" width="40px" height="40px" alt="">
+        <div>
+          <h6>Admin</h6>
+          <small>Admin</small>
+        </div>
+      </div>
     </header>
     <main>
-      <div class="card p-4"> <button class="btn btn-dark mb-3" onclick="openModal('tambahModal')"> Tambah Barang </button>
+      <div class="card p-4">
+        <button class="btn btn-dark mb-1"
+          data-bs-toggle="modal"
+          data-bs-target="#tambahModal">
+          <strong>Tambah Barang</strong>
+        </button>
         <table class="table table-bordered align-middle">
           <thead class="table-dark">
             <tr>
@@ -246,7 +273,7 @@ SELECT produk.*, kategori.kategori
 FROM produk
 JOIN kategori ON produk.id_kategori = kategori.id_kategori
 ");
-                $no =1;
+                  $no = 1;
                   while ($d = mysqli_fetch_array($q)) { ?>
 
               <tr>
@@ -255,49 +282,66 @@ JOIN kategori ON produk.id_kategori = kategori.id_kategori
                 <td>Rp <?php echo number_format($d['harga']); ?></td>
                 <td><?php echo $d['kategori']; ?></td>
                 <td> <img src="image/<?php echo $d['gambar']; ?>" width="60"> </td>
-                <td> <button class="btn btn-warning btn-sm" onclick="openModal('editModal<?php echo $d['id']; ?>')">
+                <td> <button class="btn btn-warning btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal<?php echo $d['id']; ?>">
                     Edit
                   </button>
-                  <div id="editModal<?php echo $d['id']; ?>" class="modal">
 
                     <!-- Baruu -->
-                    <div class="modal-content">
-                      <span class="close" onclick="closeModal('editModal<?php echo $d['id']; ?>')">&times;</span>
+                    <div class="modal fade" id="editModal<?php echo $d['id']; ?>" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded-4 shadow">
 
-                      <form method="POST" enctype="multipart/form-data">
+                          <form method="POST" enctype="multipart/form-data">
 
-                        <h3>Edit Barang</h3>
+                            <div class="modal-header border-0">
+                              <h5 class="modal-title">Edit Barang</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
 
-                        <input type="hidden" name="id" value="<?php echo $d['id']; ?>">
+                            <div class="modal-body">
 
-                        <input type="text" name="nama" class="form-control" value="<?php echo $d['nama']; ?>" required>
-                        <input type="number" name="harga" class="form-control" value="<?php echo $d['harga']; ?>" required>
-                        <!--  -->
-                        <select name="id_kategori" class="form-control" required>
+                              <input type="hidden" name="id" value="<?php echo $d['id']; ?>">
 
-                          <?php
-                          $kategori = mysqli_query($conn, "SELECT * FROM kategori");
-                          while ($k = mysqli_fetch_array($kategori)) {
-                          ?>
+                              <input type="text" name="nama" class="form-control mb-3"
+                                value="<?php echo $d['nama']; ?>" required>
 
-                            <option value="<?php echo $k['id_kategori']; ?>"
-                              <?php if ($d['id_kategori'] == $k['id_kategori']) echo 'selected'; ?>>
+                              <input type="number" name="harga" class="form-control mb-3"
+                                value="<?php echo $d['harga']; ?>" required>
 
-                              <?php echo $k['kategori']; ?>
+                              <select name="id_kategori" class="form-control mb-3" required>
 
-                            </option>
+                                <?php
+                                $kategori = mysqli_query($conn, "SELECT * FROM kategori");
+                                while ($k = mysqli_fetch_array($kategori)) {
+                                ?>
 
-                          <?php } ?>
+                                  <option value="<?php echo $k['id_kategori']; ?>"
+                                    <?php if ($d['id_kategori'] == $k['id_kategori']) echo 'selected'; ?>>
 
-                        </select>
-                        <input type="file" name="gambar" class="form-control">
+                                    <?php echo $k['kategori']; ?>
 
-                        <button type="submit" name="edit" class="btn-save">Update</button>
+                                  </option>
 
-                      </form>
+                                <?php } ?>
+
+                              </select>
+
+                              <input type="file" name="gambar" class="form-control">
+
+                            </div>
+
+                            <div class="modal-footer border-0">
+                              <button type="submit" name="edit" class="btn btn-warning">Update</button>
+                            </div>
+
+                          </form>
+
+                        </div>
+                      </div>
                     </div>
-                  </div> <!-- sini-->
-                  <a href="hapus_barang.php?id=<?php echo $d['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang?')"> Hapus </a>
+                    <a href="hapus_barang.php?id=<?php echo $d['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang?')"> Hapus </a>
                 </td>
               </tr> <?php } ?>
           </tbody>
@@ -362,70 +406,63 @@ location='barang.php';
   ?>
 
   <!-- Baruuuuu -->
-  <div id="tambahModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal('tambahModal')">&times;</span>
+  <div class="modal fade" id="tambahModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 shadow">
 
-      <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
 
-        <h3>Tambah Barang</h3>
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Tambah Barang</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
 
-        <input type="text" name="nama" class="form-control" placeholder="Nama Barang" required>
-        <input type="number" name="harga" class="form-control" placeholder="Harga" required>
-        <!-- <input type="text" name="kategori" class="form-control" placeholder="Kategori" required> -->
-        <select name="id_kategori" class="form-control" required>
-          <option value="">Pilih Kategori</option>
+          <div class="modal-body">
 
-          <?php
-          $kategori = mysqli_query($conn, "SELECT * FROM kategori");
-          while ($k = mysqli_fetch_array($kategori)) {
-          ?>
+            <input type="text" name="nama" class="form-control mb-3" placeholder="Nama Barang" required>
 
-            <option value="<?php echo $k['id_kategori']; ?>">
-              <?php echo $k['kategori']; ?>
-            </option>
+            <input type="number" name="harga" class="form-control mb-3" placeholder="Harga" required>
 
-          <?php } ?>
-        </select>
-        <input type="file" name="gambar" class="form-control" required>
+            <select name="id_kategori" class="form-control mb-3" required>
+              <option value="">Pilih Kategori</option>
 
-        <button type="submit" name="simpan" class="btn-save">Simpan</button>
+              <?php
+              $kategori = mysqli_query($conn, "SELECT * FROM kategori");
+              while ($k = mysqli_fetch_array($kategori)) {
+              ?>
+                <option value="<?php echo $k['id_kategori']; ?>">
+                  <?php echo $k['kategori']; ?>
+                </option>
+              <?php } ?>
+            </select>
 
-      </form>
+            <input type="file" name="gambar" class="form-control" required>
+
+          </div>
+
+          <div class="modal-footer border-0">
+            <button type="submit" name="simpan" class="btn btn-dark">Simpan</button>
+          </div>
+
+        </form>
+
+      </div>
     </div>
   </div>
+
   <script>
     function searchProduk() {
       let input = document.getElementById("searchProduk").value.toLowerCase();
       let rows = document.querySelectorAll("tbody tr");
 
       rows.forEach(function(row) {
-        let nama = row.cells[0].innerText.toLowerCase();
+        let nama = row.cells[1].innerText.toLowerCase();
         let kategori = row.cells[2].innerText.toLowerCase();
 
         if (nama.includes(input) || kategori.includes(input)) {
           row.style.display = "";
         } else {
           row.style.display = "none";
-        }
-      });
-    }
-  </script>
-
-  <script>
-    function openModal(id) {
-      document.getElementById(id).style.display = 'block';
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-      let modals = document.querySelectorAll('.modal');
-      modals.forEach(function(modal) {
-        if (event.target == modal) {
-          modal.style.display = 'none';
         }
       });
     }
