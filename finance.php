@@ -161,7 +161,7 @@ ORDER BY tgl ASC
                         <span>Cashier</span></a>
                 </li>
                 <li>
-                    <a href="transaksi.php"> <span class="las la-receipt"></span>
+                    <a href="transaksi.php"> <span class="las la-coins"></span>
                         <span>Transaksi</span></a>
                 </li>
                 <li><a href="finance.php" class="active"><span class="las la-money-bill-wave">

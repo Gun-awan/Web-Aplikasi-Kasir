@@ -195,7 +195,7 @@ $fav_menu = mysqli_fetch_array($fav);
             <span>Cashier</span></a>
         </li>
         <li>
-          <a href="" class="active"> <span class="las la-receipt"></span>
+          <a href="" class="active"> <span class="las la-coins"></span>
             <span>Transaksi</span></a>
         </li>
         <li>
@@ -215,7 +215,7 @@ $fav_menu = mysqli_fetch_array($fav);
     <header class="judul">
       <h4>
         <label for="nav-toggle">
-          <span class="las la-receipt"></span>
+          <span class="las la-coins"></span>
         </label><strong>
         Transaksi</strong>
       </h4>
