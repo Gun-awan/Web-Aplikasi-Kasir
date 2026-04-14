@@ -201,8 +201,8 @@ while($d = mysqli_fetch_array($qTrans)){
       color: rgb(43, 43, 43);
       background: #ffff;
     }
-    .card{
-      margin-top: 15px;
+    .tran{
+      margin-bottom: 10px;
     }
 
     .judul {
@@ -224,6 +224,12 @@ while($d = mysqli_fetch_array($qTrans)){
 
     .recent-grid{
       margin-top: 0px;
+    }
+    .tran{
+      margin-bottom: 20px;
+    }
+    .trans{
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -333,7 +339,7 @@ while($d = mysqli_fetch_array($qTrans)){
 
   </div>
 
-<div class="card shadow rounded-4 p-3 mt-3">
+<div class="card shadow rounded-4 p-3 mt-3 tran">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h5>Grafik Transaksi Bulan Ini</h5>
         <small><?php echo date('F Y'); ?></small>
@@ -379,7 +385,7 @@ while($d = mysqli_fetch_array($qTrans)){
     </div>
 
   </div>
-  <div class="card shadow rounded-4 p-3">
+  <div class="card shadow rounded-4 p-3 trans">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h5>Grafik Pendapatan Bulan Ini</h5>
         <small><?php echo date('F Y'); ?></small>
