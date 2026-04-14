@@ -1,30 +1,4 @@
-<?php include 'koneksi.php';
-
-$edit_mode = false;
-$data_edit = [];
-$detail_edit = [];
-
-if (isset($_GET['edit_id'])) {
-    $edit_mode = true;
-    $id = $_GET['edit_id'];
-
-    // Ambil transaksi
-    $q = mysqli_query($conn, "SELECT * FROM transaksi WHERE id='$id'");
-    $data_edit = mysqli_fetch_array($q);
-
-    // Ambil detail
-    $q2 = mysqli_query($conn, "
-        SELECT dt.*, p.nama, p.harga
-        FROM detail_transaksi dt
-        JOIN produk p ON dt.produk_id = p.id
-        WHERE dt.transaksi_id = '$id'
-    ");
-
-    while ($d = mysqli_fetch_array($q2)) {
-        $detail_edit[] = $d;
-    }
-}
-?>
+<?php include 'koneksi.php'; ?>
 <!DOCTYPE html>
 <html>
 
@@ -209,11 +183,11 @@ if (isset($_GET['edit_id'])) {
             <hr class="text-white">
             <a href="antrian.php">Antrian</a>
             <a href="dashboard.php">Data Master</a>
-
+            
 
         </div>
         <div class="master">
-            <a href="#">Logout</a>
+          <a href="#">Logout</a>  
         </div>
 
     </div>
@@ -322,10 +296,6 @@ if (isset($_GET['edit_id'])) {
 
                     <form id="formkasir" action="simpan_transaksi.php" method="POST" class="d-flex flex-column h-100">
 
-                        <?php if ($edit_mode): ?>
-                            <input type="hidden" name="edit_id" value="<?php echo $data_edit['id']; ?>">
-                        <?php endif; ?>
-
                         <div class="mb-2">
 
                             <div class="d-flex align-items-center gap-2">
@@ -334,9 +304,9 @@ if (isset($_GET['edit_id'])) {
                                 <!-- <input type="text" id="customer" name="customer" class="form-control namacust" placeholder="Nama Customer" required> -->
                                 <input type="text" id="customer" name="customer"
                                     class="form-control namacust"
-                                    value="<?php echo $edit_mode ? $data_edit['customer'] : ''; ?>"
                                     placeholder="Nama Customer"
-                                    required>
+                                    required
+                                    onkeydown="handleEnter(event)">
 
                                 <div class="position-relative nol">
 
@@ -405,19 +375,8 @@ if (isset($_GET['edit_id'])) {
             <script>
                 let keranjang = [];
 
-                <?php if ($edit_mode): ?>
-                    keranjang = [
-                        <?php foreach ($detail_edit as $d): ?> {
-                                id: <?php echo $d['produk_id']; ?>,
-                                nama: "<?php echo $d['nama']; ?>",
-                                harga: <?php echo $d['harga']; ?>,
-                                qty: <?php echo $d['qty']; ?>
-                            },
-                        <?php endforeach; ?>
-                    ];
-                <?php endif; ?>
-
                 function tambahKeranjang(id, nama, harga) {
+
                     let existing = keranjang.find(item => item.id == id);
 
                     if (existing) {
@@ -433,10 +392,6 @@ if (isset($_GET['edit_id'])) {
 
                     tampilkanKeranjang();
                 }
-
-                document.addEventListener("DOMContentLoaded", function() {
-                    tampilkanKeranjang();
-                });
 
                 function filterKategori(kategori, tombol) {
 

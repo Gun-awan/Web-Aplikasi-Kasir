@@ -6,7 +6,7 @@
             <div class="modal-header border-0">
 
                 <div>
-                    <h5 class="mb-1"><?php echo $t['customer']; ?></h5>
+                    <h5 class="mb-1"><?php echo ucwords(strtolower($t['customer'])); ?></h5>
 
                     <small class="text-muted d-block">
                         Transaksi #<?php echo $t['id']; ?>

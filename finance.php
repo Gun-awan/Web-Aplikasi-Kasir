@@ -182,7 +182,7 @@ ORDER BY tgl ASC
             <div class="user-wrapper">
         <img src="" width="40px" height="40px" alt="">
         <div>
-          <h4>Admin</h4>
+          <h6>Admin</h6>
           <small>Admin</small>
         </div>
       </div>

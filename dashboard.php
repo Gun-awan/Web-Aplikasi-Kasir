@@ -57,10 +57,17 @@ $produk = mysqli_fetch_array(mysqli_query($conn, "
 SELECT COUNT(*) as total FROM produk
 "));
 
+// Produk terjual
+$produkjual = mysqli_fetch_array(mysqli_query($conn, "
+SELECT SUM(qty) as total FROM detail_transaksi
+WHERE DATE(tgl_transaksi) = '$today'
+"));
+
 // Orders = antrian sekarang
 $orders = mysqli_fetch_array(mysqli_query($conn, "
 SELECT COUNT(*) as total FROM transaksi
-WHERE status='baru'
+WHERE status='selesai'
+AND DATE(tanggal) = '$today'
 "));
 
 // Income = transaksi selesai
@@ -125,6 +132,29 @@ $qTrans = mysqli_query($conn, "
 while($d = mysqli_fetch_array($qTrans)){
     $labels_transaksi[] = date('d', strtotime($d['tgl']));
     $data_transaksi[] = $d['jumlah'];
+}
+?>
+
+<?php
+$label_produk = [];
+$data_produk = [];
+
+$qProduk = mysqli_query($conn, "
+    SELECT p.nama, SUM(dt.qty) as total_terjual
+    FROM detail_transaksi dt
+    JOIN produk p ON dt.produk_id = p.id
+    JOIN transaksi t ON dt.transaksi_id = t.id
+    WHERE t.status='selesai' AND DATE(tanggal) = '$today'
+    GROUP BY dt.produk_id
+    ORDER BY total_terjual DESC
+");
+if(!$qProduk){
+    die("Query Error: " . mysqli_error($conn));
+}
+
+while($d = mysqli_fetch_array($qProduk)){
+    $label_produk[] = $d['nama'];
+    $data_produk[] = $d['total_terjual'];
 }
 ?>
 
@@ -209,6 +239,9 @@ while($d = mysqli_fetch_array($qTrans)){
     .card{
       margin-top: 20px;
     }
+    .cards{
+      margin-top: 2px;
+    }
     
   </style>
 </head>
@@ -280,7 +313,7 @@ while($d = mysqli_fetch_array($qTrans)){
         <div class="card-singel">
           <div>
             <span>Favourite Menu</span>
-            <h6 class="text-das"><?php echo $fav_menu['nama'] ?? '-'; ?></h6>
+            <h6 class="text-das"><?php echo $fav_menu['nama'] ?? 0; ?></h6>
           </div>
           <div>
             <span class="lar la-heart icon"></span>
@@ -288,7 +321,7 @@ while($d = mysqli_fetch_array($qTrans)){
         </div>
         <div class="card-singel">
           <div>
-            <span>Produk</span>
+            <span>All Produk</span>
             <h5 class="text-das"><?php echo $produk['total']; ?></h5>
           </div>
           <div>
@@ -297,7 +330,7 @@ while($d = mysqli_fetch_array($qTrans)){
         </div>
         <div class="card-singel">
           <div>
-            <span>Orders</span>
+            <span>Orders Today</span>
             <h5 class="text-das"><?php echo $orders['total']; ?></h5>
           </div>
           <div>
@@ -306,7 +339,7 @@ while($d = mysqli_fetch_array($qTrans)){
         </div>
         <div class="card-singel">
           <div>
-            <span>Income</span>
+            <span>Income Today</span>
             <h5 class="text-das text-white">Rp <?php echo number_format($pendapatan_hari_ini['total'] ?? 0); ?></h5>
           </div>
           <div>
@@ -315,9 +348,18 @@ while($d = mysqli_fetch_array($qTrans)){
         </div>
       </div>
 
+      <div class="card shadow rounded-4 p-3 mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Produk Terlaris Hari Ini</h5>
+        <!-- <small>Top 5</small> -->
+    </div>
+
+    <canvas id="chartProduk" height="120"></canvas>
+</div>
+
       <div class="card shadow rounded-4 p-3">
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Pendapatan Bulan Ini</h5>
+        <h5>Grafik Pendapatan Bulan Ini</h5>
         <small><?php echo date('F Y'); ?></small>
     </div>
 
@@ -326,7 +368,7 @@ while($d = mysqli_fetch_array($qTrans)){
 
 <div class="card shadow rounded-4 p-3 mt-3">
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Jumlah Transaksi Bulan Ini</h5>
+        <h5>Grafik Transaksi Bulan Ini</h5>
         <small><?php echo date('F Y'); ?></small>
     </div>
 
@@ -375,6 +417,45 @@ new Chart(ctx, {
     mode: 'index',
     intersect: false
 }
+    }
+});
+</script>
+
+<script>
+const ctx3 = document.getElementById('chartProduk');
+
+new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($label_produk); ?>,
+        datasets: [{
+            label: 'Jumlah Terjual',
+            data: <?php echo json_encode($data_produk); ?>,
+            borderWidth: 1,
+            backgroundColor: [
+                '#0d6efd',
+                '#198754',
+                '#ffc107',
+                '#dc3545',
+                '#6f42c1'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
     }
 });
 </script>
