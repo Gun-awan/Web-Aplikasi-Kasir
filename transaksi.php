@@ -199,7 +199,7 @@ while($d = mysqli_fetch_array($qTrans)){
     }
     .card-header{
       color: rgb(43, 43, 43);
-      background: #e4e0e0;
+      background: #ffff;
     }
     .card{
       margin-top: 15px;
@@ -296,36 +296,36 @@ while($d = mysqli_fetch_array($qTrans)){
 
         <div class="stats-grid">
 
-          <div class="card stat-card">
+          <div class="card stat-card pendapatan">
             <div class="card-header">
-              <h6>Transaksi Hari Ini</h6>
+              <h7>Transaksi Hari Ini</h7>
               <p><?php echo date('d-M-Y'); ?></p>
             </div>
             <div class="card-body">
-              <h2><?php echo $transaksi_hari_ini['total']; ?></h2>
-              <small>Total transaksi hari ini</small>
+              <h4><?php echo $transaksi_hari_ini['total']; ?></h4>
+              <!-- <small>Total transaksi hari ini</small> -->
             </div>
           </div>
 
-          <div class="card stat-card">
+          <div class="card stat-card pendapatan">
             <div class="card-header">
-              <h6>Transaksi Minggu Ini</h6>
+              <h7>Transaksi Minggu Ini</h7>
               <p><?php echo date('W'); ?></p>
             </div>
             <div class="card-body">
-              <h2><?php echo $transaksi_minggu['total']; ?></h2>
-              <small>Total transaksi minggu ini</small>
+              <h4><?php echo $transaksi_minggu['total']; ?></h4>
+              <!-- <small>Total transaksi minggu ini</small> -->
             </div>
         </div>
 
-        <div class="card stat-card">
+        <div class="card stat-card pendapatan">
           <div class="card-header">
-            <h6>Transaksi Bulan Ini</h6>
+            <h7>Transaksi Bulan Ini</h7>
             <p><?php echo date('F'); ?></p>
           </div>
           <div class="card-body">
-            <h2><?php echo $transaksi_bulan['total']; ?></h2>
-            <small>Total transaksi bulan ini</small>
+            <h4><?php echo $transaksi_bulan['total']; ?></h4>
+            <!-- <small>Total transaksi bulan ini</small> -->
           </div>
         </div>
 
@@ -348,7 +348,7 @@ while($d = mysqli_fetch_array($qTrans)){
 
       <div class="card stat-card pendapatan">
         <div class="card-header">
-          <h6>Pendapatan Hari Ini</h6>
+          <h7>Pendapatan Hari Ini</h7>
           <p><?php echo date('d-M-Y'); ?></p>
         </div>
         <div class="card-body">
@@ -358,7 +358,7 @@ while($d = mysqli_fetch_array($qTrans)){
 
       <div class="card stat-card pendapatan">
         <div class="card-header">
-          <h6>Pendapatan Minggu Ini</h6>
+          <h7>Pendapatan Minggu Ini</h7>
           <p><?php echo date('W'); ?></p>
         </div>
         <div class="card-body">
@@ -368,7 +368,7 @@ while($d = mysqli_fetch_array($qTrans)){
 
       <div class="card stat-card pendapatan">
         <div class="card-header">
-          <h6>Pendapatan Bulan Ini</h6>
+          <h7>Pendapatan Bulan Ini</h7>
           <p><?php echo date('F'); ?></p>
         </div>
         <div class="card-body">
