@@ -1,4 +1,23 @@
-<?php include 'koneksi.php'; ?>
+<?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
+
+<?php
+session_start();
+include 'koneksi.php';
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit;
+}
+
+$id_user = $_SESSION['user_id'];
+
+$user = mysqli_fetch_array(mysqli_query($conn, "
+  SELECT * FROM users WHERE id_users='$id_user'
+")); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +31,7 @@
   <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
   <link rel="stylesheet" href="style/main.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
 
     .modal-content {
@@ -231,7 +251,7 @@
             <span>Income</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-user-circle"></span>
+          <a href="akun.php"> <span class="las la-user-circle"></span>
             <span>Account</span></a>
         </li>
       </ul>
@@ -242,21 +262,34 @@
     <header>
       <h4> <label for="nav-toggle"> <span class="las la-clipboard-list"></span> </label><strong>Data Produk</strong></h4>
       <div class="search-wrapper"> <span class="las la-search"></span> <input type="text" id="searchProduk" placeholder="Search here" onkeyup="searchProduk()"> </div>
-      <div class="user-wrapper">
-        <img src="" width="40px" height="40px" alt="">
-        <div>
-          <h6>Admin</h6>
-          <small>Admin</small>
-        </div>
-      </div>
+      <div class="user-wrapper"> 
+    <img src="image/user/<?php echo $user['foto'] ? $user['foto'] : 'default.png'; ?>"
+         width="40px" height="40px" 
+         style="border-radius:50%; object-fit:cover;">
+
+    <div>
+        <h6><?php echo $user['nama_lengkap']; ?></h6> 
+
+        <small>
+            <a href="logout.php">Log Out</a>
+        </small>
+    </div>
+</div>
     </header>
     <main>
       <div class="card p-4">
+        <div class="d-flex justify-content-between">
         <button class="btn btn-dark mb-1"
           data-bs-toggle="modal"
           data-bs-target="#tambahModal">
           <strong>Tambah Barang</strong>
         </button>
+        <button class="btn btn-dark mb-1"
+          data-bs-toggle="modal"
+          data-bs-target="#tambahKategori">
+          <strong>Tambah Kategori</strong>
+        </button>
+        </div>
         <table class="table table-bordered align-middle">
           <thead class="table-dark">
             <tr>
@@ -271,7 +304,7 @@
           <tbody> <?php $q = mysqli_query($conn, "
 SELECT produk.*, kategori.kategori
 FROM produk
-JOIN kategori ON produk.id_kategori = kategori.id_kategori
+LEFT JOIN kategori ON produk.id_kategori = kategori.id_kategori
 ");
                   $no = 1;
                   while ($d = mysqli_fetch_array($q)) { ?>
@@ -280,7 +313,7 @@ JOIN kategori ON produk.id_kategori = kategori.id_kategori
                 <td><?php echo $no++; ?></td>
                 <td><?php echo $d['nama']; ?></td>
                 <td>Rp <?php echo number_format($d['harga']); ?></td>
-                <td><?php echo $d['kategori']; ?></td>
+                <td><?php echo $d['kategori'] ?? '-'; ?></td>
                 <td> <img src="image/<?php echo $d['gambar']; ?>" width="60"> </td>
                 <td> <button class="btn btn-warning btn-sm"
                     data-bs-toggle="modal"
@@ -288,7 +321,7 @@ JOIN kategori ON produk.id_kategori = kategori.id_kategori
                     Edit
                   </button>
 
-                    <!-- Baruu -->
+                    <!-- Modal Edit -->
                     <div class="modal fade" id="editModal<?php echo $d['id']; ?>" tabindex="-1">
                       <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content rounded-4 shadow">
@@ -372,6 +405,18 @@ location='barang.php';
 </script>";
   }
 
+  if (isset($_POST['tambah'])) {
+    $isikategori = $_POST['kategori'];
+
+    mysqli_query($conn, "INSERT INTO kategori(kategori)
+    VALUES('$isikategori')");
+
+    echo "<script>
+alert('Kategori berhasil ditambahkan');
+location='barang.php';
+</script>";
+  }
+
   if (isset($_POST['edit'])) {
     $id = $_POST['id'];
     $nama = $_POST['nama'];
@@ -442,6 +487,61 @@ location='barang.php';
 
           <div class="modal-footer border-0">
             <button type="submit" name="simpan" class="btn btn-dark">Simpan</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Baruuuuu Kategori -->
+  <div class="modal fade" id="tambahKategori" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 shadow">
+
+        <form method="POST" enctype="multipart/form-data">
+
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Tambah Kategori</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+
+  <input type="text" name="kategori" class="form-control mb-3" placeholder="Isi Kategori" required>
+
+  <hr>
+
+  <h6>Daftar Kategori</h6>
+
+  <div style="max-height:200px; overflow-y:auto;">
+    <?php
+    $list = mysqli_query($conn, "SELECT * FROM kategori ORDER BY id_kategori DESC");
+    while($k = mysqli_fetch_array($list)){
+    ?>
+      <div class="d-flex justify-content-between align-items-center border p-2 mb-2 rounded">
+
+        <div>
+          <?php echo $k['kategori']; ?>
+        </div>
+
+        <a href="hapus_kategori.php?id=<?php echo $k['id_kategori']; ?>"
+   class="btn btn-danger"
+   onclick="return confirm('Yakin hapus kategori ini?')">
+   <i class="bi bi-trash"></i>
+</a>
+
+
+
+      </div>
+    <?php } ?>
+  </div>
+
+</div>
+
+          <div class="modal-footer border-0">
+            <button type="submit" name="tambah" class="btn btn-dark">Simpan</button>
           </div>
 
         </form>

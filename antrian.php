@@ -1,4 +1,25 @@
-<?php include 'koneksi.php';
+<?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
+
+<?php
+session_start();
+include 'koneksi.php';
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit;
+}
+
+$id_user = $_SESSION['user_id'];
+
+$user = mysqli_fetch_array(mysqli_query($conn, "
+  SELECT * FROM users WHERE id_users='$id_user'
+"));
+
+$today = date('Y-m-d');
 ?>
 <!DOCTYPE html>
 <html>
@@ -103,7 +124,7 @@
 
         .daftar {
             margin-top: 10px;
-            margin-right: 1050px;
+            margin-right: 1070px;
         }
 
         .la-receipt {
@@ -146,8 +167,11 @@
         }
 
         .master {
-            margin-left: 17px;
+            margin-left: 10px;
             margin-top: 350px;
+            border-radius: 20px 20px 0 0;
+            padding: 6px;
+            padding-right: 14px;
         }
 
         .p-3 {
@@ -172,7 +196,7 @@
 
         </div>
         <div class="master">
-            <a href="#">Logout</a>
+            <a href="logout.php">Logout</a>
         </div>
     </div>
 
@@ -303,7 +327,7 @@
                             <h5 class="mb-0">
                                 Antrian Selesai :
                                 <?php
-                                $q3 = mysqli_query($conn, "SELECT * FROM transaksi WHERE status='selesai'");
+                                $q3 = mysqli_query($conn, "SELECT * FROM transaksi WHERE status='selesai' AND DATE(tanggal) = CURDATE()");
                                 echo mysqli_num_rows($q3);
                                 ?>
                             </h5>

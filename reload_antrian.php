@@ -290,7 +290,7 @@
                             <h5 class="mb-0">
                                 Antrian Selesai :
                                 <?php
-                                $q3 = mysqli_query($conn, "SELECT * FROM transaksi WHERE status='selesai'");
+                                $q3 = mysqli_query($conn, "SELECT * FROM transaksi WHERE status='selesai' AND DATE(tanggal) = CURDATE()");
                                 echo mysqli_num_rows($q3);
                                 ?>
                             </h5>

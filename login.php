@@ -1,25 +1,40 @@
 <?php
-    include 'koneksi.php'; 
+session_start();
+include 'koneksi.php'; 
 
-    $error = "";
-    $sukses="";
+$error = "";
+$sukses = "";
 
-    if(isset($_POST['login'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+if(isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-        $sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $sql = "SELECT * FROM users WHERE username='$username'";
+    $result = $conn->query($sql);
 
-        $result = $conn->query($sql);
+    if($result->num_rows > 0){
+        $data = $result->fetch_assoc();
 
-        if($result->num_rows > 0) {
-            $sukses = "Login Berhasil";
-            header("refresh:2;url=dashboard.php");
-        } else{
-            $error= "Akun tidak ditemukan";
-        }
+        if($password == $data['password']){
+            
+            $_SESSION['user_id'] = $data['id_users'];
+            $_SESSION['role']    = $data['role'];
+
+            // 🔥 ROLE REDIRECT
+            if($data['role'] == 'admin'){
+                header("Location: dashboard.php");
+                exit;
+
+            } elseif($data['role'] == 'kasir'){
+                header("Location: index.php");
+                exit;
+
+    } else {
+        $error = "User tidak ditemukan";
     }
-
+}
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +63,7 @@
 <body>
 
     <div class="wrapper">
-        <form action="Login.php" method="POST">
+        <form action="login.php" method="POST">
             <h1>Login</h1>
             <div class="input-box">
                 <input type="text" placeholder="Username" name="username">

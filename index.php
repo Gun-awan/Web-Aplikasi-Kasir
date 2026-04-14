@@ -1,4 +1,23 @@
-<?php include 'koneksi.php';
+<?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
+
+<?php
+session_start();
+include 'koneksi.php';
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit;
+}
+
+$id_user = $_SESSION['user_id'];
+
+$user = mysqli_fetch_array(mysqli_query($conn, "
+  SELECT * FROM users WHERE id_users='$id_user'
+"));
 
 $edit_mode = false;
 $data_edit = [];
@@ -128,7 +147,7 @@ if (isset($_GET['edit_id'])) {
         }
 
         .totantrian {
-            padding-left: 120px;
+            margin-left: 120px;
         }
 
         .produk {
@@ -195,6 +214,7 @@ if (isset($_GET['edit_id'])) {
         .master {
             margin-left: 17px;
             margin-top: 350px;
+            padding-right: 14px;
         }
     </style>
 </head>
@@ -213,7 +233,7 @@ if (isset($_GET['edit_id'])) {
 
         </div>
         <div class="master">
-            <a href="#">Logout</a>
+            <a href="logout.php">Logout</a>
         </div>
 
     </div>
@@ -236,16 +256,16 @@ if (isset($_GET['edit_id'])) {
                     onclick="filterKategori('Semua', this)">Semua</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('1', this)">Isi 3</button>
+                    onclick="filterKategori('7', this)">Isi 3</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('2', this)">Isi 4</button>
+                    onclick="filterKategori('9', this)">Isi 4</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('3', this)">Isi 5</button>
+                    onclick="filterKategori('6', this)">Isi 5</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('4', this)">Sticky Milk</button>
+                    onclick="filterKategori('10', this)">Sticky Milk</button>
 
                 <input type="text"
                     id="searchProduk"
@@ -292,7 +312,7 @@ if (isset($_GET['edit_id'])) {
                                             <img src="image/<?php echo $p['gambar']; ?>" height="120"
                                                 style="border-radius:15px; object-fit:cover;">
                                             <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
-                                            <p>Rp<?php echo number_format($p['harga']); ?></p>
+                                            <p>Rp <?php echo number_format($p['harga']); ?></p>
                                             <button class="btn btn-dark"
                                                 onclick="tambahKeranjang(
                                     <?php echo $p['id']; ?>,

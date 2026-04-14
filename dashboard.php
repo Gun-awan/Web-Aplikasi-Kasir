@@ -1,5 +1,29 @@
 <?php
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+?>
+
+<?php
+session_start();
 include 'koneksi.php';
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: login.php");
+    exit;
+}
+
+if($_SESSION['role'] != 'admin'){
+    header("Location: index.php");
+    exit;
+}
+
+$id_user = $_SESSION['user_id'];
+
+$user = mysqli_fetch_array(mysqli_query($conn, "
+  SELECT * FROM users WHERE id_users='$id_user'
+"));
+
 
 $today = date('Y-m-d');
 
@@ -279,7 +303,7 @@ while($d = mysqli_fetch_array($qProduk)){
             <span>Income</span></a>
         </li>
         <li>
-          <a href=""> <span class="las la-user-circle"></span>
+          <a href="akun.php"> <span class="las la-user-circle"></span>
             <span>Account</span></a>
         </li>
         
@@ -295,17 +319,19 @@ while($d = mysqli_fetch_array($qProduk)){
         </label><strong>
         Dashboard</strong>
       </h4>
-      <!-- <div class="search-wrapper">
-          <span class="las la-search"></span>
-          <input type="search" placeholder="Search here"/>
-        </div> -->
-      <div class="user-wrapper">
-        <img src="" width="40px" height="40px" alt="">
-        <div>
-          <h6>Admin</h6>
-          <small>Admin</small>
-        </div>
-      </div>
+      <div class="user-wrapper"> 
+    <img src="image/user/<?php echo $user['foto'] ? $user['foto'] : 'default.png'; ?>"
+         width="40px" height="40px" 
+         style="border-radius:50%; object-fit:cover;">
+
+    <div>
+        <h6><?php echo $user['nama_lengkap']; ?></h6> 
+
+        <small class="text-black">
+            <a href="logout.php">Log Out</a>
+        </small>
+    </div>
+</div>
     </header>
 
     <main>
