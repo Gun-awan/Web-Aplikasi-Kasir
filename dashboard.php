@@ -8,14 +8,14 @@ header("Expires: 0");
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit;
 }
 
-if($_SESSION['role'] != 'admin'){
-    header("Location: index.php");
-    exit;
+if ($_SESSION['role'] != 'admin') {
+  header("Location: index.php");
+  exit;
 }
 
 $id_user = $_SESSION['user_id'];
@@ -130,9 +130,9 @@ $qChart = mysqli_query($conn, "
     ORDER BY tgl ASC
 ");
 
-while($d = mysqli_fetch_array($qChart)){
-    $labels[] = date('d', strtotime($d['tgl']));
-    $data[] = $d['total'];
+while ($d = mysqli_fetch_array($qChart)) {
+  $labels[] = date('d', strtotime($d['tgl']));
+  $data[] = $d['total'];
 }
 ?>
 
@@ -153,9 +153,9 @@ $qTrans = mysqli_query($conn, "
     ORDER BY tgl ASC
 ");
 
-while($d = mysqli_fetch_array($qTrans)){
-    $labels_transaksi[] = date('d', strtotime($d['tgl']));
-    $data_transaksi[] = $d['jumlah'];
+while ($d = mysqli_fetch_array($qTrans)) {
+  $labels_transaksi[] = date('d', strtotime($d['tgl']));
+  $data_transaksi[] = $d['jumlah'];
 }
 ?>
 
@@ -172,13 +172,13 @@ $qProduk = mysqli_query($conn, "
     GROUP BY dt.produk_id
     ORDER BY total_terjual DESC
 ");
-if(!$qProduk){
-    die("Query Error: " . mysqli_error($conn));
+if (!$qProduk) {
+  die("Query Error: " . mysqli_error($conn));
 }
 
-while($d = mysqli_fetch_array($qProduk)){
-    $label_produk[] = $d['nama'];
-    $data_produk[] = $d['total_terjual'];
+while ($d = mysqli_fetch_array($qProduk)) {
+  $label_produk[] = $d['nama'];
+  $data_produk[] = $d['total_terjual'];
 }
 ?>
 
@@ -247,26 +247,29 @@ while($d = mysqli_fetch_array($qProduk)){
     .judul {
       height: 72px;
     }
+
     .sidebar-menu li a {
-  text-decoration: none !important;
-  padding-right: 90px !important;
-}
-    header h4{
+      text-decoration: none !important;
+      padding-right: 90px !important;
+    }
+
+    header h4 {
       margin-top: 3px;
       margin-left: 0px;
       margin-bottom: 2px;
     }
-    
-    .sidebar-brand{
+
+    .sidebar-brand {
       margin-top: 4px;
     }
-    .card{
+
+    .card {
       margin-top: 20px;
     }
-    .cards{
+
+    .cards {
       margin-top: 2px;
     }
-    
   </style>
 </head>
 
@@ -306,7 +309,7 @@ while($d = mysqli_fetch_array($qProduk)){
           <a href="akun.php"> <span class="las la-user-circle"></span>
             <span>Account</span></a>
         </li>
-        
+
       </ul>
     </div>
   </div>
@@ -317,21 +320,23 @@ while($d = mysqli_fetch_array($qProduk)){
         <label for="nav-toggle">
           <span class="las la-igloo"></span>
         </label><strong>
-        Dashboard</strong>
+          Dashboard</strong>
       </h4>
-      <div class="user-wrapper"> 
-    <img src="image/user/<?php echo $user['foto'] ? $user['foto'] : 'default.png'; ?>"
-         width="40px" height="40px" 
-         style="border-radius:50%; object-fit:cover;">
+      <div class="user-wrapper">
+        <a href="akun.php">
+          <img src="image/user/<?php echo $user['foto'] ?? 'default.png'; ?>"
+            width="40" height="40"
+            style="border-radius:50%; object-fit:cover; cursor:pointer;">
+        </a>
 
-    <div>
-        <h6><?php echo $user['nama_lengkap']; ?></h6> 
+        <div>
+          <h6><?php echo $user['nama_lengkap']; ?></h6>
 
-        <small class="text-black">
+          <small class="text-black">
             <a href="logout.php">Log Out</a>
-        </small>
-    </div>
-</div>
+          </small>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -375,158 +380,164 @@ while($d = mysqli_fetch_array($qProduk)){
       </div>
 
       <div class="card shadow rounded-4 p-3 mt-3">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Produk Terlaris Hari Ini</h5>
-        <!-- <small>Top 5</small> -->
-    </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5>Produk Terlaris Hari Ini</h5>
+          <!-- <small>Top 5</small> -->
+        </div>
 
-    <canvas id="chartProduk" height="120"></canvas>
-</div>
+        <canvas id="chartProduk" height="120"></canvas>
+      </div>
 
       <div class="card shadow rounded-4 p-3">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Grafik Pendapatan Bulan Ini</h5>
-        <small><?php echo date('F Y'); ?></small>
-    </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5>Grafik Pendapatan Bulan Ini</h5>
+          <small><?php echo date('F Y'); ?></small>
+        </div>
 
-    <canvas id="chartPendapatan" height="100"></canvas>
-</div>
+        <canvas id="chartPendapatan" height="100"></canvas>
+      </div>
 
-<div class="card shadow rounded-4 p-3 mt-3">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Grafik Transaksi Bulan Ini</h5>
-        <small><?php echo date('F Y'); ?></small>
-    </div>
+      <div class="card shadow rounded-4 p-3 mt-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5>Grafik Transaksi Bulan Ini</h5>
+          <small><?php echo date('F Y'); ?></small>
+        </div>
 
-    <canvas id="chartTransaksi" height="100"></canvas>
-</div>
+        <canvas id="chartTransaksi" height="100"></canvas>
+      </div>
 
   </div>
   <script>
-    
-const ctx = document.getElementById('chartPendapatan');
+    const ctx = document.getElementById('chartPendapatan');
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
+    new Chart(ctx, {
+      type: 'line',
+      data: {
         labels: <?php echo json_encode($labels); ?>,
         datasets: [{
-            label: 'Pendapatan (Rp)',
-            data: <?php echo json_encode($data); ?>,
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true,
-            backgroundColor: 'rgba(25, 135, 84, 0.1)', // hijau soft
-            borderColor: '#198754',
-            pointBackgroundColor: '#198754'
+          label: 'Pendapatan (Rp)',
+          data: <?php echo json_encode($data); ?>,
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true,
+          backgroundColor: 'rgba(25, 135, 84, 0.1)', // hijau soft
+          borderColor: '#198754',
+          pointBackgroundColor: '#198754'
         }]
-    },
-    options: {
+      },
+      options: {
         responsive: true,
         plugins: {
-            legend: {
-                display: true
-            }
+          legend: {
+            display: true
+          }
         },
-        
+
         scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value){
-                        return 'Rp ' + value.toLocaleString();
-                    }
-                }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return 'Rp ' + value.toLocaleString();
+              }
             }
+          }
         },
         interaction: {
-    mode: 'index',
-    intersect: false
-}
-    }
-});
-</script>
+          mode: 'index',
+          intersect: false
+        }
+      }
+    });
+  </script>
 
-<script>
-const ctx3 = document.getElementById('chartProduk');
+  <script>
+    const ctx3 = document.getElementById('chartProduk');
 
-new Chart(ctx3, {
-    type: 'bar',
-    data: {
+    new Chart(ctx3, {
+      type: 'bar',
+      data: {
         labels: <?php echo json_encode($label_produk); ?>,
         datasets: [{
-            label: 'Jumlah Terjual',
-            data: <?php echo json_encode($data_produk); ?>,
-            borderWidth: 1,
-            backgroundColor: [
-                '#0d6efd',
-                '#198754',
-                '#ffc107',
-                '#dc3545',
-                '#6f42c1'
-            ]
+          label: 'Jumlah Terjual',
+          data: <?php echo json_encode($data_produk); ?>,
+          borderWidth: 1,
+          backgroundColor: [
+            '#0d6efd',
+            '#198754',
+            '#ffc107',
+            '#dc3545',
+            '#6f42c1'
+          ]
         }]
-    },
-    options: {
+      },
+      options: {
         responsive: true,
         plugins: {
-            legend: {
-                display: false
-            }
+          legend: {
+            display: false
+          }
         },
         scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1
-                }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
             }
+          }
         }
-    }
-});
-</script>
+      }
+    });
+  </script>
 
-<script>
-const ctx2 = document.getElementById('chartTransaksi');
+  <script>
+    const ctx2 = document.getElementById('chartTransaksi');
 
-new Chart(ctx2, {
-    type: 'line',
-    data: {
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
         labels: <?php echo json_encode($labels_transaksi); ?>,
         datasets: [{
-            label: 'Jumlah Transaksi',
-            data: <?php echo json_encode($data_transaksi); ?>,
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true,
-            backgroundColor: 'rgba(13, 110, 253, 0.1)', // biru soft
-            borderColor: '#0d6efd',
-            pointBackgroundColor: '#0d6efd'
+          label: 'Jumlah Transaksi',
+          data: <?php echo json_encode($data_transaksi); ?>,
+          borderWidth: 3,
+          tension: 0.4,
+          fill: true,
+          backgroundColor: 'rgba(13, 110, 253, 0.1)', // biru soft
+          borderColor: '#0d6efd',
+          pointBackgroundColor: '#0d6efd'
         }]
-    },
-    options: {
+      },
+      options: {
         responsive: true,
         plugins: {
-            legend: {
-                display: true
-            }
+          legend: {
+            display: true
+          }
         },
-        
+
         scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1 // biar integer (1,2,3)
-                }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1 // biar integer (1,2,3)
             }
+          }
         },
         tooltip: {
-    callbacks: {
-        label: function(context){
-            return context.dataset.label + ': ' + context.raw.toLocaleString();
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ': ' + context.raw.toLocaleString();
+            }
+          }
         }
-    }
-}
+      }
+    });
+  </script>
+  <script>
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted || window.performance.navigation.type === 2) {
+        window.location.reload();
     }
 });
 </script>

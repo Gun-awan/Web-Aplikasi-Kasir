@@ -213,7 +213,7 @@
             <div class="row">
 
                 <!-- Antrian Sekarang -->
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card shadow-sm rounded-4">
 
                         <!-- HEADER (TIDAK IKUT SCROLL) -->
@@ -254,7 +254,7 @@
                 </div>
 
                 <!-- Pending -->
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card shadow-sm rounded-4">
                         <div class="p-3 border-bottom bg-white" style="position: sticky; top: 0; z-index: 10;">
                             <h5 class="mb-0">
@@ -283,37 +283,7 @@
                     </div>
                 </div>
 
-                <!-- Selesai -->
-                <div class="col-md-4">
-                    <div class="card shadow-sm rounded-4">
-                        <div class="p-3 border-bottom bg-white" style="position: sticky; top: 0; z-index: 10;">
-                            <h5 class="mb-0">
-                                Antrian Selesai :
-                                <?php
-                                $q3 = mysqli_query($conn, "SELECT * FROM transaksi WHERE status='selesai' AND DATE(tanggal) = CURDATE()");
-                                echo mysqli_num_rows($q3);
-                                ?>
-                            </h5>
-                        </div>
-
-                        <div class="p-3" style="overflow-y:auto; height:calc(100vh - 180px);">
-                            <?php
-                            while ($t = mysqli_fetch_array($q3)) {
-                            ?>
-                                <button class="btn btn-success w-100 mb-2"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal<?php echo $t['id']; ?>">
-                                    <?php echo ucwords(strtolower($t['customer'])); ?>
-                                </button>
-
-                                <?php include 'modal_antrian.php'; ?>
-
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+                
 
         </div>
         <script>

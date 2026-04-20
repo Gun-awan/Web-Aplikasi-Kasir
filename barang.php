@@ -8,9 +8,9 @@ header("Expires: 0");
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit;
 }
 
 $id_user = $_SESSION['user_id'];
@@ -33,7 +33,6 @@ $user = mysqli_fetch_array(mysqli_query($conn, "
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-
     .modal-content {
       background: white;
 
@@ -41,14 +40,15 @@ $user = mysqli_fetch_array(mysqli_query($conn, "
       border-radius: 15px;
       position: relative;
     }
-    .modal.fade .modal-dialog {
-    transform: scale(0.9);
-    transition: 0.3s ease;
-}
 
-.modal.show .modal-dialog {
-    transform: scale(1);
-}
+    .modal.fade .modal-dialog {
+      transform: scale(0.9);
+      transition: 0.3s ease;
+    }
+
+    .modal.show .modal-dialog {
+      transform: scale(1);
+    }
 
     .close {
       position: absolute;
@@ -197,22 +197,27 @@ $user = mysqli_fetch_array(mysqli_query($conn, "
     .btn-sm {
       font-size: 13px;
     }
+
     .sidebar-menu li a {
-  text-decoration: none !important;
-  padding-right: 90px !important;
-}
-    header h4{
+      text-decoration: none !important;
+      padding-right: 90px !important;
+    }
+
+    header h4 {
       margin-top: 3px;
       margin-left: 0px;
       margin-bottom: 2px;
     }
-    header{
+
+    header {
       height: 72px;
     }
-    header h4 strong{
+
+    header h4 strong {
       margin-left: 5px;
     }
-    .sidebar-brand{
+
+    .sidebar-brand {
       margin-top: 4px;
     }
   </style>
@@ -262,33 +267,35 @@ $user = mysqli_fetch_array(mysqli_query($conn, "
     <header>
       <h4> <label for="nav-toggle"> <span class="las la-clipboard-list"></span> </label><strong>Data Produk</strong></h4>
       <div class="search-wrapper"> <span class="las la-search"></span> <input type="text" id="searchProduk" placeholder="Search here" onkeyup="searchProduk()"> </div>
-      <div class="user-wrapper"> 
-    <img src="image/user/<?php echo $user['foto'] ? $user['foto'] : 'default.png'; ?>"
-         width="40px" height="40px" 
-         style="border-radius:50%; object-fit:cover;">
+      <div class="user-wrapper">
+        <a href="akun.php">
+          <img src="image/user/<?php echo $user['foto'] ?? 'default.png'; ?>"
+            width="40" height="40"
+            style="border-radius:50%; object-fit:cover; cursor:pointer;">
+        </a>
 
-    <div>
-        <h6><?php echo $user['nama_lengkap']; ?></h6> 
+        <div>
+          <h6><?php echo $user['nama_lengkap']; ?></h6>
 
-        <small>
+          <small>
             <a href="logout.php">Log Out</a>
-        </small>
-    </div>
-</div>
+          </small>
+        </div>
+      </div>
     </header>
     <main>
       <div class="card p-4">
         <div class="d-flex justify-content-between">
-        <button class="btn btn-dark mb-1"
-          data-bs-toggle="modal"
-          data-bs-target="#tambahModal">
-          <strong>Tambah Barang</strong>
-        </button>
-        <button class="btn btn-dark mb-1"
-          data-bs-toggle="modal"
-          data-bs-target="#tambahKategori">
-          <strong>Tambah Kategori</strong>
-        </button>
+          <button class="btn btn-dark mb-1"
+            data-bs-toggle="modal"
+            data-bs-target="#tambahModal">
+            <strong>Tambah Barang</strong>
+          </button>
+          <button class="btn btn-dark mb-1"
+            data-bs-toggle="modal"
+            data-bs-target="#tambahKategori">
+            <strong>Tambah Kategori</strong>
+          </button>
         </div>
         <table class="table table-bordered align-middle">
           <thead class="table-dark">
@@ -321,60 +328,60 @@ LEFT JOIN kategori ON produk.id_kategori = kategori.id_kategori
                     Edit
                   </button>
 
-                    <!-- Modal Edit -->
-                    <div class="modal fade" id="editModal<?php echo $d['id']; ?>" tabindex="-1">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content rounded-4 shadow">
+                  <!-- Modal Edit -->
+                  <div class="modal fade" id="editModal<?php echo $d['id']; ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content rounded-4 shadow">
 
-                          <form method="POST" enctype="multipart/form-data">
+                        <form method="POST" enctype="multipart/form-data">
 
-                            <div class="modal-header border-0">
-                              <h5 class="modal-title">Edit Barang</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
+                          <div class="modal-header border-0">
+                            <h5 class="modal-title">Edit Barang</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
 
-                            <div class="modal-body">
+                          <div class="modal-body">
 
-                              <input type="hidden" name="id" value="<?php echo $d['id']; ?>">
+                            <input type="hidden" name="id" value="<?php echo $d['id']; ?>">
 
-                              <input type="text" name="nama" class="form-control mb-3"
-                                value="<?php echo $d['nama']; ?>" required>
+                            <input type="text" name="nama" class="form-control mb-3"
+                              value="<?php echo $d['nama']; ?>" required>
 
-                              <input type="number" name="harga" class="form-control mb-3"
-                                value="<?php echo $d['harga']; ?>" required>
+                            <input type="number" name="harga" class="form-control mb-3"
+                              value="<?php echo $d['harga']; ?>" required>
 
-                              <select name="id_kategori" class="form-control mb-3" required>
+                            <select name="id_kategori" class="form-control mb-3" required>
 
-                                <?php
-                                $kategori = mysqli_query($conn, "SELECT * FROM kategori");
-                                while ($k = mysqli_fetch_array($kategori)) {
-                                ?>
+                              <?php
+                              $kategori = mysqli_query($conn, "SELECT * FROM kategori");
+                              while ($k = mysqli_fetch_array($kategori)) {
+                              ?>
 
-                                  <option value="<?php echo $k['id_kategori']; ?>"
-                                    <?php if ($d['id_kategori'] == $k['id_kategori']) echo 'selected'; ?>>
+                                <option value="<?php echo $k['id_kategori']; ?>"
+                                  <?php if ($d['id_kategori'] == $k['id_kategori']) echo 'selected'; ?>>
 
-                                    <?php echo $k['kategori']; ?>
+                                  <?php echo $k['kategori']; ?>
 
-                                  </option>
+                                </option>
 
-                                <?php } ?>
+                              <?php } ?>
 
-                              </select>
+                            </select>
 
-                              <input type="file" name="gambar" class="form-control">
+                            <input type="file" name="gambar" class="form-control">
 
-                            </div>
+                          </div>
 
-                            <div class="modal-footer border-0">
-                              <button type="submit" name="edit" class="btn btn-warning">Update</button>
-                            </div>
+                          <div class="modal-footer border-0">
+                            <button type="submit" name="edit" class="btn btn-warning">Update</button>
+                          </div>
 
-                          </form>
+                        </form>
 
-                        </div>
                       </div>
                     </div>
-                    <a href="hapus_barang.php?id=<?php echo $d['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang?')"> Hapus </a>
+                  </div>
+                  <a href="hapus_barang.php?id=<?php echo $d['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang?')"> Hapus </a>
                 </td>
               </tr> <?php } ?>
           </tbody>
@@ -509,36 +516,36 @@ location='barang.php';
 
           <div class="modal-body">
 
-  <input type="text" name="kategori" class="form-control mb-3" placeholder="Isi Kategori" required>
+            <input type="text" name="kategori" class="form-control mb-3" placeholder="Isi Kategori" required>
 
-  <hr>
+            <hr>
 
-  <h6>Daftar Kategori</h6>
+            <h6>Daftar Kategori</h6>
 
-  <div style="max-height:200px; overflow-y:auto;">
-    <?php
-    $list = mysqli_query($conn, "SELECT * FROM kategori ORDER BY id_kategori DESC");
-    while($k = mysqli_fetch_array($list)){
-    ?>
-      <div class="d-flex justify-content-between align-items-center border p-2 mb-2 rounded">
+            <div style="max-height:200px; overflow-y:auto;">
+              <?php
+              $list = mysqli_query($conn, "SELECT * FROM kategori ORDER BY id_kategori DESC");
+              while ($k = mysqli_fetch_array($list)) {
+              ?>
+                <div class="d-flex justify-content-between align-items-center border p-2 mb-2 rounded">
 
-        <div>
-          <?php echo $k['kategori']; ?>
-        </div>
+                  <div>
+                    <?php echo $k['kategori']; ?>
+                  </div>
 
-        <a href="hapus_kategori.php?id=<?php echo $k['id_kategori']; ?>"
-   class="btn btn-danger"
-   onclick="return confirm('Yakin hapus kategori ini?')">
-   <i class="bi bi-trash"></i>
-</a>
+                  <a href="hapus_kategori.php?id=<?php echo $k['id_kategori']; ?>"
+                    class="btn btn-danger"
+                    onclick="return confirm('Yakin hapus kategori ini?')">
+                    <i class="bi bi-trash"></i>
+                  </a>
 
 
 
-      </div>
-    <?php } ?>
-  </div>
+                </div>
+              <?php } ?>
+            </div>
 
-</div>
+          </div>
 
           <div class="modal-footer border-0">
             <button type="submit" name="tambah" class="btn btn-dark">Simpan</button>
@@ -567,6 +574,13 @@ location='barang.php';
       });
     }
   </script>
+  <script>
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted || window.performance.navigation.type === 2) {
+        window.location.reload();
+    }
+});
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

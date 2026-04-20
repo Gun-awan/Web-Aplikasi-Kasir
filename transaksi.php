@@ -8,14 +8,14 @@ header("Expires: 0");
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit;
 }
 
-if($_SESSION['role'] != 'admin'){
-    header("Location: index.php");
-    exit;
+if ($_SESSION['role'] != 'admin') {
+  header("Location: index.php");
+  exit;
 }
 
 $id_user = $_SESSION['user_id'];
@@ -121,9 +121,9 @@ $qChart = mysqli_query($conn, "
     ORDER BY tgl ASC
 ");
 
-while($d = mysqli_fetch_array($qChart)){
-    $labels[] = date('d', strtotime($d['tgl']));
-    $data[] = $d['total'];
+while ($d = mysqli_fetch_array($qChart)) {
+  $labels[] = date('d', strtotime($d['tgl']));
+  $data[] = $d['total'];
 }
 ?>
 
@@ -144,9 +144,9 @@ $qTrans = mysqli_query($conn, "
     ORDER BY tgl ASC
 ");
 
-while($d = mysqli_fetch_array($qTrans)){
-    $labels_transaksi[] = date('d', strtotime($d['tgl']));
-    $data_transaksi[] = $d['jumlah'];
+while ($d = mysqli_fetch_array($qTrans)) {
+  $labels_transaksi[] = date('d', strtotime($d['tgl']));
+  $data_transaksi[] = $d['jumlah'];
 }
 ?>
 
@@ -220,38 +220,44 @@ while($d = mysqli_fetch_array($qTrans)){
     .card-header h3 {
       font-family: 'Poppins', sans-serif;
     }
-    .card-header{
+
+    .card-header {
       color: rgb(43, 43, 43);
       background: #ffff;
     }
-    .tran{
+
+    .tran {
       margin-bottom: 10px;
     }
 
     .judul {
       height: 72px;
     }
+
     .sidebar-menu li a {
-  text-decoration: none !important;
-  padding-right: 90px !important;
-}
-    header h4{
+      text-decoration: none !important;
+      padding-right: 90px !important;
+    }
+
+    header h4 {
       margin-top: 3px;
       margin-left: 0px;
       margin-bottom: 2px;
     }
-    
-    .sidebar-brand{
+
+    .sidebar-brand {
       margin-top: 4px;
     }
 
-    .recent-grid{
+    .recent-grid {
       margin-top: 0px;
     }
-    .tran{
+
+    .tran {
       margin-bottom: 20px;
     }
-    .trans{
+
+    .trans {
       margin-top: 20px;
     }
   </style>
@@ -304,29 +310,31 @@ while($d = mysqli_fetch_array($qTrans)){
         <label for="nav-toggle">
           <span class="las la-coins"></span>
         </label><strong>
-        Transaksi</strong>
+          Transaksi</strong>
       </h4>
       <!-- <div class="search-wrapper">
           <span class="las la-search"></span>
           <input type="search" placeholder="Search here"/>
         </div> -->
-      <div class="user-wrapper"> 
-    <img src="image/user/<?php echo $user['foto'] ? $user['foto'] : 'default.png'; ?>"
-         width="40px" height="40px" 
-         style="border-radius:50%; object-fit:cover;">
+      <div class="user-wrapper">
+        <a href="akun.php">
+          <img src="image/user/<?php echo $user['foto'] ?? 'default.png'; ?>"
+            width="40" height="40"
+            style="border-radius:50%; object-fit:cover; cursor:pointer;">
+        </a>
 
-    <div>
-        <h6><?php echo $user['nama_lengkap']; ?></h6> 
+        <div>
+          <h6><?php echo $user['nama_lengkap']; ?></h6>
 
-        <small>
+          <small>
             <a href="logout.php">Log Out</a>
-        </small>
-    </div>
-</div>
+          </small>
+        </div>
+      </div>
     </header>
 
     <main>
-      
+
       <div class="recent-grid">
 
         <div class="stats-grid">
@@ -351,169 +359,175 @@ while($d = mysqli_fetch_array($qTrans)){
               <h4><?php echo $transaksi_minggu['total']; ?></h4>
               <!-- <small>Total transaksi minggu ini</small> -->
             </div>
-        </div>
-
-        <div class="card stat-card pendapatan">
-          <div class="card-header">
-            <h7>Transaksi Bulan Ini</h7>
-            <p><?php echo date('F'); ?></p>
           </div>
-          <div class="card-body">
-            <h4><?php echo $transaksi_bulan['total']; ?></h4>
-            <!-- <small>Total transaksi bulan ini</small> -->
+
+          <div class="card stat-card pendapatan">
+            <div class="card-header">
+              <h7>Transaksi Bulan Ini</h7>
+              <p><?php echo date('F'); ?></p>
+            </div>
+            <div class="card-body">
+              <h4><?php echo $transaksi_bulan['total']; ?></h4>
+              <!-- <small>Total transaksi bulan ini</small> -->
+            </div>
           </div>
+
         </div>
 
       </div>
 
-  </div>
-
-<div class="card shadow rounded-4 p-3 mt-3 tran">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Grafik Transaksi Bulan Ini</h5>
-        <small><?php echo date('F Y'); ?></small>
-    </div>
-
-    <canvas id="chartTransaksi" height="100"></canvas>
-</div>
-
-  <div class="recent-grid">
-
-    <div class="stats-grid">
-
-      <div class="card stat-card pendapatan">
-        <div class="card-header">
-          <h7>Pendapatan Hari Ini</h7>
-          <p><?php echo date('d-M-Y'); ?></p>
+      <div class="card shadow rounded-4 p-3 mt-3 tran">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5>Grafik Transaksi Bulan Ini</h5>
+          <small><?php echo date('F Y'); ?></small>
         </div>
-        <div class="card-body">
-          <h4>Rp <?php echo number_format($pendapatan_hari_ini['total'] ?? 0); ?></h4>
-        </div>
+
+        <canvas id="chartTransaksi" height="100"></canvas>
       </div>
 
-      <div class="card stat-card pendapatan">
-        <div class="card-header">
-          <h7>Pendapatan Minggu Ini</h7>
-          <p><?php echo date('W'); ?></p>
+      <div class="recent-grid">
+
+        <div class="stats-grid">
+
+          <div class="card stat-card pendapatan">
+            <div class="card-header">
+              <h7>Pendapatan Hari Ini</h7>
+              <p><?php echo date('d-M-Y'); ?></p>
+            </div>
+            <div class="card-body">
+              <h4>Rp <?php echo number_format($pendapatan_hari_ini['total'] ?? 0); ?></h4>
+            </div>
+          </div>
+
+          <div class="card stat-card pendapatan">
+            <div class="card-header">
+              <h7>Pendapatan Minggu Ini</h7>
+              <p><?php echo date('W'); ?></p>
+            </div>
+            <div class="card-body">
+              <h4>Rp <?php echo number_format($pendapatan_minggu['total'] ?? 0); ?></h4>
+            </div>
+          </div>
+
+          <div class="card stat-card pendapatan">
+            <div class="card-header">
+              <h7>Pendapatan Bulan Ini</h7>
+              <p><?php echo date('F'); ?></p>
+            </div>
+            <div class="card-body">
+              <h4>Rp <?php echo number_format($pendapatan_bulan['total'] ?? 0); ?></h4>
+            </div>
+          </div>
+
         </div>
-        <div class="card-body">
-          <h4>Rp <?php echo number_format($pendapatan_minggu['total'] ?? 0); ?></h4>
+
+      </div>
+      <div class="card shadow rounded-4 p-3 trans">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5>Grafik Pendapatan Bulan Ini</h5>
+          <small><?php echo date('F Y'); ?></small>
         </div>
+
+        <canvas id="chartPendapatan" height="100"></canvas>
       </div>
 
-      <div class="card stat-card pendapatan">
-        <div class="card-header">
-          <h7>Pendapatan Bulan Ini</h7>
-          <p><?php echo date('F'); ?></p>
-        </div>
-        <div class="card-body">
-          <h4>Rp <?php echo number_format ($pendapatan_bulan['total'] ?? 0); ?></h4>
-        </div>
-      </div>
+      <script>
+        const ctx2 = document.getElementById('chartTransaksi');
 
-    </div>
-
-  </div>
-  <div class="card shadow rounded-4 p-3 trans">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5>Grafik Pendapatan Bulan Ini</h5>
-        <small><?php echo date('F Y'); ?></small>
-    </div>
-
-    <canvas id="chartPendapatan" height="100"></canvas>
-</div>
-
-  <script>
-const ctx2 = document.getElementById('chartTransaksi');
-
-new Chart(ctx2, {
-    type: 'line',
-    data: {
-        labels: <?php echo json_encode($labels_transaksi); ?>,
-        datasets: [{
-            label: 'Jumlah Transaksi',
-            data: <?php echo json_encode($data_transaksi); ?>,
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true,
-            backgroundColor: 'rgba(13, 110, 253, 0.1)', // biru soft
-            borderColor: '#0d6efd',
-            pointBackgroundColor: '#0d6efd'
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
+        new Chart(ctx2, {
+          type: 'line',
+          data: {
+            labels: <?php echo json_encode($labels_transaksi); ?>,
+            datasets: [{
+              label: 'Jumlah Transaksi',
+              data: <?php echo json_encode($data_transaksi); ?>,
+              borderWidth: 3,
+              tension: 0.4,
+              fill: true,
+              backgroundColor: 'rgba(13, 110, 253, 0.1)', // biru soft
+              borderColor: '#0d6efd',
+              pointBackgroundColor: '#0d6efd'
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
                 display: true
-            }
-        },
-        
-        scales: {
-            y: {
+              }
+            },
+
+            scales: {
+              y: {
                 beginAtZero: true,
                 ticks: {
-                    stepSize: 1 // biar integer (1,2,3)
+                  stepSize: 1 // biar integer (1,2,3)
                 }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ' + context.raw.toLocaleString();
+                }
+              }
             }
-        },
-        tooltip: {
-    callbacks: {
-        label: function(context){
-            return context.dataset.label + ': ' + context.raw.toLocaleString();
-        }
-    }
-}
+          }
+        });
+      </script>
+
+      <script>
+        const ctx = document.getElementById('chartPendapatan');
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: <?php echo json_encode($labels); ?>,
+            datasets: [{
+              label: 'Pendapatan (Rp)',
+              data: <?php echo json_encode($data); ?>,
+              borderWidth: 3,
+              tension: 0.4,
+              fill: true,
+              backgroundColor: 'rgba(25, 135, 84, 0.1)', // hijau soft
+              borderColor: '#198754',
+              pointBackgroundColor: '#198754'
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true
+              }
+            },
+
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return 'Rp ' + value.toLocaleString();
+                  }
+                }
+              }
+            },
+            interaction: {
+              mode: 'index',
+              intersect: false
+            }
+          }
+        });
+      </script>
+      <script>
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted || window.performance.navigation.type === 2) {
+        window.location.reload();
     }
 });
 </script>
 
-<script>
-    
-const ctx = document.getElementById('chartPendapatan');
-
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <?php echo json_encode($labels); ?>,
-        datasets: [{
-            label: 'Pendapatan (Rp)',
-            data: <?php echo json_encode($data); ?>,
-            borderWidth: 3,
-            tension: 0.4,
-            fill: true,
-            backgroundColor: 'rgba(25, 135, 84, 0.1)', // hijau soft
-            borderColor: '#198754',
-            pointBackgroundColor: '#198754'
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: true
-            }
-        },
-        
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value){
-                        return 'Rp ' + value.toLocaleString();
-                    }
-                }
-            }
-        },
-        interaction: {
-    mode: 'index',
-    intersect: false
-}
-    }
-});
-</script>
-
-  </main>
+    </main>
   </div>
 </body>
 

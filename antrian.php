@@ -396,6 +396,13 @@ $today = date('Y-m-d');
                 document.getElementById("overlay").style.display = "none";
             }
         </script>
+        <script>
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted || window.performance.navigation.type === 2) {
+        window.location.reload();
+    }
+});
+</script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

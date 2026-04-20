@@ -8,7 +8,7 @@ header("Expires: 0");
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
@@ -148,6 +148,7 @@ if (isset($_GET['edit_id'])) {
 
         .totantrian {
             margin-left: 120px;
+            margin-right: 80px;
         }
 
         .produk {
@@ -169,7 +170,6 @@ if (isset($_GET['edit_id'])) {
 
         .la-users {
             color: #ffffff;
-            padding-left: 80px;
             margin-right: 20px;
         }
 
@@ -246,11 +246,13 @@ if (isset($_GET['edit_id'])) {
         <!-- Navbar -->
 
         <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
-            <div class="d-flex flex-nowrap align-items-center w-100">
+            <div class="d-flex flex-nowrap align-items-center justify-content-center w-100">
 
                 <i class="bi bi-list"
                     onclick="openSidebar()"
                     style="font-size:30px; cursor:pointer; color:white; margin-right:15px;"></i>
+
+                    <div class="d-flex flex-nowrap mx-auto">
 
                 <button class="btn btn-outline-light me-2 kategori-btn active-kategori"
                     onclick="filterKategori('Semua', this)">Semua</button>
@@ -266,6 +268,8 @@ if (isset($_GET['edit_id'])) {
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
                     onclick="filterKategori('10', this)">Sticky Milk</button>
+
+                    </div>
 
                 <input type="text"
                     id="searchProduk"
@@ -352,11 +356,14 @@ if (isset($_GET['edit_id'])) {
 
 
                                 <!-- <input type="text" id="customer" name="customer" class="form-control namacust" placeholder="Nama Customer" required> -->
-                                <input type="text" id="customer" name="customer"
-                                    class="form-control namacust"
-                                    value="<?php echo $edit_mode ? $data_edit['customer'] : ''; ?>"
-                                    placeholder="Nama Customer"
-                                    required>
+                                <input type="text"
+    id="customer"
+    name="customer"
+    class="form-control namacust"
+    value="<?php echo $edit_mode ? $data_edit['customer'] : ''; ?>"
+    placeholder="Nama Customer"
+    onkeydown="handleEnter(event)"
+    required>
 
                                 <div class="position-relative nol">
 
@@ -495,36 +502,72 @@ if (isset($_GET['edit_id'])) {
                     tampilkanKeranjang();
                 }
 
-                function cekSimpan() {
+                let isSaving = false;
 
-                    let customer = document.getElementById("customer").value.trim();
+function cekSimpan() {
 
-                    if (keranjang.length === 0) {
-                        alert("Pilih produk terlebih dahulu");
-                        return;
-                    }
+    if (isSaving) return; // 🔥 cegah double klik / auto spam
 
-                    if (customer === "") {
-                        alert("Nama customer harus diisi");
-                        return;
-                    }
+    let customer = document.getElementById("customer").value.trim();
 
-                    let formData = new FormData(document.getElementById("formkasir"));
+    if (keranjang.length === 0) {
+        alert("Belum ada barang");
+        return;
+    }
 
-                    fetch('simpan_transaksi.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(data => {
-                            alert("Pesanan berhasil disimpan");
-                            window.location = 'index.php';
+    if (customer === "") {
+        alert("Masukan nama customer");
+        return;
+    }
 
-                            keranjang = [];
-                            tampilkanKeranjang();
-                            document.getElementById("customer").value = "";
-                        });
-                }
+    // 🔥 KONFIRMASI DULU
+    let konfirmasi = confirm("Simpan pesanan?");
+    if (!konfirmasi) return;
+
+    isSaving = true;
+
+    let formData = new FormData(document.getElementById("formkasir"));
+
+    fetch('simpan_transaksi.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        window.location = 'index.php';
+    });
+}
+
+                // // function cekSimpan() {
+
+                // //     let customer = document.getElementById("customer").value.trim();
+
+                // //     if (keranjang.length === 0) {
+                // //         alert("Pilih produk terlebih dahulu");
+                // //         return;
+                // //     }
+
+                // //     if (customer === "") {
+                // //         alert("Nama customer harus diisi");
+                // //         return;
+                // //     }
+
+                // //     let formData = new FormData(document.getElementById("formkasir"));
+
+                // //     fetch('simpan_transaksi.php', {
+                // //             method: 'POST',
+                // //             body: formData
+                // //         })
+                // //         .then(response => response.text())
+                // //         .then(data => {
+                // //             alert("Pesanan berhasil disimpan");
+                // //             window.location = 'index.php';
+
+                // //             keranjang = [];
+                // //             tampilkanKeranjang();
+                // //             document.getElementById("customer").value = "";
+                // //         });
+                // }
 
                 function batalKeranjang() {
                     if (confirm("Batalkan Pesanan?")) {
@@ -620,6 +663,13 @@ if (isset($_GET['edit_id'])) {
                     let totalQty = keranjang.reduce((sum, item) => sum + item.qty, 0);
                     document.getElementById("badgeCart").innerText = totalQty;
                 }
+            </script>
+            <script>
+                window.addEventListener("pageshow", function(event) {
+                    if (event.persisted || window.performance.navigation.type === 2) {
+                        window.location.reload();
+                    }
+                });
             </script>
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

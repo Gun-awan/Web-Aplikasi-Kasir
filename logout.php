@@ -3,6 +3,10 @@ session_start();
 session_unset();
 session_destroy();
 
-header("Location: login.php");
+// 🔥 HAPUS CACHE HISTORY
+echo "<script>
+window.location.href='login.php';
+window.history.pushState(null, null, 'login.php');
+</script>";
 exit;
 ?>
