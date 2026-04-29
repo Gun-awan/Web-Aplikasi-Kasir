@@ -84,15 +84,10 @@ if (isset($_GET['edit_id'])) {
         }
 
         .navbar {
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 6px rgba(241, 150, 14, 0.15);
             overflow-x: auto;
             white-space: nowrap;
             height: 75px;
-        }
-
-        .btn-warning {
-            margin-left: 20px;
-
         }
 
         .sidebar {
@@ -152,18 +147,18 @@ if (isset($_GET['edit_id'])) {
         }
 
         .produk {
-            background: #80878d;
+            background: #8d8a80;
             margin-top: 15px;
             margin-left: 15px;
         }
 
         .besar {
-            background: #eaebec;
+            background: #fdefc5;
         }
 
         .pesanan {
             background: #ffffff;
-            color: rgb(25, 27, 25);
+            color: rgb(27, 26, 25);
             margin-left: 8px;
             margin-right: 8px;
         }
@@ -201,7 +196,7 @@ if (isset($_GET['edit_id'])) {
         }
 
         .produk {
-            background: #80878d;
+            background: rgb(255, 167, 4);
             border-radius: 0;
             height: 100%;
             margin-right: 30px;
@@ -245,7 +240,7 @@ if (isset($_GET['edit_id'])) {
 
         <!-- Navbar -->
 
-        <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
+        <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(255, 167, 4);; z-index:1000;">
             <div class="d-flex flex-nowrap align-items-center justify-content-center w-100">
 
                 <i class="bi bi-list"
@@ -315,9 +310,9 @@ if (isset($_GET['edit_id'])) {
                                         <div class="card p-2 pesanan">
                                             <img src="image/<?php echo $p['gambar']; ?>" height="120"
                                                 style="border-radius:15px; object-fit:cover;">
-                                            <h6 class="nama-produk"><?php echo $p['nama']; ?></h6>
-                                            <p>Rp <?php echo number_format($p['harga']); ?></p>
-                                            <button class="btn btn-dark"
+                                            <h6 class="nama-produk"><?php echo ucwords($p['nama']); ?></h6>
+                                            <small>Rp <?php echo number_format($p['harga']); ?></small>
+                                            <button class="btn btn-warning"
                                                 onclick="tambahKeranjang(
                                     <?php echo $p['id']; ?>,
                                     '<?php echo $p['nama']; ?>',
@@ -390,9 +385,9 @@ if (isset($_GET['edit_id'])) {
                         <input type="hidden" name="data" id="dataKeranjang">
                         <input type="hidden" name="total" id="totalInput">
 
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-dark w-50" onclick="batalKeranjang()">Batal</button>
-                            <button type="button" class="btn btn-dark w-50" onclick="cekSimpan()">Simpan</button>
+                        <div class="d-flex gap-2 mb-2">
+                            <button type="button" class="btn btn-warning w-50" onclick="batalKeranjang()">Batal</button>
+                            <button type="button" class="btn btn-warning w-50" onclick="cekSimpan()">Simpan</button>
                         </div>
 
                     </form>

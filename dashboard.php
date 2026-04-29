@@ -101,10 +101,11 @@ WHERE status='selesai'
 "));
 
 $fav = mysqli_query($conn, "
-SELECT produk.nama, SUM(detail_transaksi.qty) as total_pesan
-FROM detail_transaksi
-JOIN produk ON detail_transaksi.produk_id = produk.id
-GROUP BY detail_transaksi.produk_id
+SELECT k.kategori, SUM(dt.qty) as total_pesan
+FROM detail_transaksi dt
+JOIN produk p ON dt.produk_id = p.id
+JOIN kategori k ON p.id_kategori = k.id_kategori
+GROUP BY k.id_kategori
 ORDER BY total_pesan DESC
 LIMIT 1
 ");
@@ -160,25 +161,27 @@ while ($d = mysqli_fetch_array($qTrans)) {
 ?>
 
 <?php
-$label_produk = [];
-$data_produk = [];
+$label_kategori = [];
+$data_kategori = [];
 
-$qProduk = mysqli_query($conn, "
-    SELECT p.nama, SUM(dt.qty) as total_terjual
+$qKategori = mysqli_query($conn, "
+    SELECT k.kategori, SUM(dt.qty) as total_terjual
     FROM detail_transaksi dt
     JOIN produk p ON dt.produk_id = p.id
+    JOIN kategori k ON p.id_kategori = k.id_kategori
     JOIN transaksi t ON dt.transaksi_id = t.id
-    WHERE t.status='selesai' AND DATE(tanggal) = '$today'
-    GROUP BY dt.produk_id
+    WHERE t.status='selesai' AND DATE(t.tanggal) = '$today'
+    GROUP BY k.id_kategori
     ORDER BY total_terjual DESC
 ");
-if (!$qProduk) {
+
+if (!$qKategori) {
   die("Query Error: " . mysqli_error($conn));
 }
 
-while ($d = mysqli_fetch_array($qProduk)) {
-  $label_produk[] = $d['nama'];
-  $data_produk[] = $d['total_terjual'];
+while ($d = mysqli_fetch_assoc($qKategori)) {
+  $label_kategori[] = $d['kategori'];
+  $data_kategori[] = $d['total_terjual'];
 }
 ?>
 
@@ -343,8 +346,10 @@ while ($d = mysqli_fetch_array($qProduk)) {
       <div class="cards">
         <div class="card-singel">
           <div>
-            <span>Favourite Menu</span>
-            <h6 class="text-das"><?php echo $fav_menu['nama'] ?? 0; ?></h6>
+            <span>Favourite Toping</span>
+            <h6 class="text-das">
+              <?= $fav_menu['kategori'] ?? '-' ?>
+            </h6>
           </div>
           <div>
             <span class="lar la-heart icon"></span>
@@ -457,10 +462,10 @@ while ($d = mysqli_fetch_array($qProduk)) {
     new Chart(ctx3, {
       type: 'bar',
       data: {
-        labels: <?php echo json_encode($label_produk); ?>,
+        labels: <?php echo json_encode($label_kategori); ?>,
         datasets: [{
           label: 'Jumlah Terjual',
-          data: <?php echo json_encode($data_produk); ?>,
+          data: <?php echo json_encode($data_kategori); ?>,
           borderWidth: 1,
           backgroundColor: [
             '#0d6efd',
