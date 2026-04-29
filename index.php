@@ -258,13 +258,13 @@ if (isset($_GET['edit_id'])) {
                     onclick="filterKategori('Semua', this)">Semua</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('7', this)">Isi 3</button>
+                    onclick="filterKategori('11', this)">Keju</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('9', this)">Isi 4</button>
+                    onclick="filterKategori('12', this)">Oreo</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('6', this)">Isi 5</button>
+                    onclick="filterKategori('13', this)">Kacang</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
                     onclick="filterKategori('10', this)">Sticky Milk</button>

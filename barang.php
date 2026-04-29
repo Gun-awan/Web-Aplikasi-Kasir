@@ -318,7 +318,7 @@ LEFT JOIN kategori ON produk.id_kategori = kategori.id_kategori
 
               <tr>
                 <td><?php echo $no++; ?></td>
-                <td><?php echo $d['nama']; ?></td>
+                <td><?php echo ucwords($d['nama']); ?></td>
                 <td>Rp <?php echo number_format($d['harga']); ?></td>
                 <td><?php echo $d['kategori'] ?? '-'; ?></td>
                 <td> <img src="image/<?php echo $d['gambar']; ?>" width="60"> </td>
