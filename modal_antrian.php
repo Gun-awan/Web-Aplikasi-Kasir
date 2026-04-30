@@ -66,8 +66,8 @@
                     <input type="text"
     class="form-control"
     id="bayar<?php echo $t['id']; ?>"
-    onkeyup="formatRupiah(this); hitungKembalian(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)"
-    onkeydown="handleEnter(event, <?php echo $t['id']; ?>, <?php echo $t['total']; ?>)"
+    onkeyup="formatRupiah(this); hitungKembalian(<?php echo $t['id']; ?>, <?php echo number_format($t['total']); ?>)"
+    onkeydown="handleEnter(event, <?php echo $t['id']; ?>, <?php echo number_format($t['total']); ?>)"
     placeholder="Masukkan nominal bayar">
 
                 </div>
