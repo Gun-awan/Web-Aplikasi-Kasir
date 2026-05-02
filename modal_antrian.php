@@ -40,7 +40,7 @@
                     <div class="d-flex justify-content-between border-bottom py-2">
 
                         <div>
-                            <strong><?php echo $d['nama']; ?></strong><br>
+                            <strong><?php echo ucwords($d['nama']); ?></strong><br>
                             <small class="text-muted">
                                 Qty : <?php echo $d['qty']; ?>
                             </small>

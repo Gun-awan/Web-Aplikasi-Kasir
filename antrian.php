@@ -8,7 +8,7 @@ header("Expires: 0");
 session_start();
 include 'koneksi.php';
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
@@ -124,7 +124,7 @@ $today = date('Y-m-d');
 
         .daftar {
             margin-top: 10px;
-            margin-right: 1070px;
+
         }
 
         .la-receipt {
@@ -207,15 +207,27 @@ $today = date('Y-m-d');
 
         <!-- Navbar -->
 
-        <nav class="navbar sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
-            <div class="d-flex flex-nowrap align-items-center w-100">
-
+        <nav class="sticky-top px-3 mb-2" style="background:rgb(25, 27, 25);; z-index:1000;">
+            <div class="d-flex justify-items-between">
+            <div class="col-md-3 d-flex">
+                
                 <i class="bi bi-list"
                     onclick="openSidebar()"
                     style="font-size:30px; cursor:pointer; color:white; margin-right:15px;"></i>
 
                 <h4 class="text-white daftar">Daftar Antrian</h4>
+            </div>
+            
 
+
+            <div class="col-md-6 align-content-center text-center">
+                <button class="btn btn-light ms-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#top3Modal">
+                    Tampilkan 3 Pesanan Teratas
+                </button>
+            </div>
+            <div class="col-md-3 text-end">
                 <!-- <input type="text"
             id="searchNama"
             class="form-control mx-2"
@@ -224,8 +236,9 @@ $today = date('Y-m-d');
             onkeyup="searchNama()"> -->
 
                 <h2><a href="index.php"><span class="las la-receipt"></span></a></h2>
-
             </div>
+            </div>
+
         </nav>
 
         <div class="container mt-4">
@@ -267,9 +280,9 @@ $today = date('Y-m-d');
                                         <?php echo ucwords(strtolower($t['customer'])); ?>
                                     </button>
 
-                                    <a href="index.php?edit_id=<?php echo $t['id']; ?>" 
-                                    class="btn btn-info ms-2">
-                                    <i class="bi bi-pencil"></i>
+                                    <a href="index.php?edit_id=<?php echo $t['id']; ?>"
+                                        class="btn btn-info ms-2">
+                                        <i class="bi bi-pencil"></i>
                                     </a>
 
                                 </div>
@@ -301,16 +314,16 @@ $today = date('Y-m-d');
                             ?>
 
                                 <div class="d-flex align-items-center mb-2">
-                                <button class="btn btn-warning flex-grow-1"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal<?php echo $t['id']; ?>">
-                                    <?php echo ucwords(strtolower($t['customer'])); ?>
-                                </button>
+                                    <button class="btn btn-warning flex-grow-1"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modal<?php echo $t['id']; ?>">
+                                        <?php echo ucwords(strtolower($t['customer'])); ?>
+                                    </button>
 
-                                <a href="index.php?edit_id=<?php echo $t['id']; ?>"
-                                    class="btn btn-info ms-2">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
+                                    <a href="index.php?edit_id=<?php echo $t['id']; ?>"
+                                        class="btn btn-info ms-2">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
                                 </div>
 
                                 <?php include 'modal_antrian.php'; ?>
@@ -352,6 +365,74 @@ $today = date('Y-m-d');
 
             </div>
 
+        </div>
+
+        <div class="modal fade" id="top3Modal" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content rounded-4 shadow">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">3 Pesanan Teratas</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <?php
+                        $top3 = mysqli_query($conn, "
+          SELECT * FROM transaksi
+          WHERE status='baru'
+          ORDER BY id ASC
+          LIMIT 3
+        ");
+
+                        $no = 1;
+                        while ($t = mysqli_fetch_array($top3)) {
+                        ?>
+
+                            <div class="mb-3 p-3 border rounded">
+
+                                <h6>
+                                    <?php echo $no++; ?>.
+                                    <?php echo ucwords(strtolower($t['customer'])); ?>
+                                </h6>
+
+                                <small class="text-muted">
+                                    Transaksi #<?php echo $t['id']; ?>
+                                </small>
+
+                                <hr>
+
+                                <?php
+                                $detail = mysqli_query($conn, "
+              SELECT dt.*, p.nama
+              FROM detail_transaksi dt
+              JOIN produk p ON dt.produk_id = p.id
+              WHERE dt.transaksi_id = '" . $t['id'] . "'
+            ");
+
+                                while ($d = mysqli_fetch_array($detail)) {
+                                ?>
+
+                                    <div class="d-flex justify-content-between">
+                                        <span><?php echo $d['nama']; ?> (x<?php echo $d['qty']; ?>)</span>
+                                        <span>Rp <?php echo number_format($d['subtotal']); ?></span>
+                                    </div>
+
+                                <?php } ?>
+
+                                <div class="text-end mt-2">
+                                    <strong>Total: Rp <?php echo number_format($t['total']); ?></strong>
+                                </div>
+
+                            </div>
+
+                        <?php } ?>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
         <script>
             function searchNama() {
@@ -397,12 +478,12 @@ $today = date('Y-m-d');
             }
         </script>
         <script>
-window.addEventListener("pageshow", function (event) {
-    if (event.persisted || window.performance.navigation.type === 2) {
-        window.location.reload();
-    }
-});
-</script>
+            window.addEventListener("pageshow", function(event) {
+                if (event.persisted || window.performance.navigation.type === 2) {
+                    window.location.reload();
+                }
+            });
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

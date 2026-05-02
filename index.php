@@ -2,11 +2,14 @@
 header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
+
 ?>
 
 <?php
 session_start();
 include 'koneksi.php';
+
+/** @var mysqli $conn */
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -252,16 +255,16 @@ if (isset($_GET['edit_id'])) {
                     onclick="filterKategori('Semua', this)">Semua</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('11', this)">Keju</button>
+                    onclick="filterKategori('15', this)">Coklat</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('12', this)">Oreo</button>
+                    onclick="filterKategori('16', this)">Matcha</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('13', this)">Kacang</button>
+                    onclick="filterKategori('17', this)">Original</button>
 
                 <button class="btn btn-outline-light me-2 kategori-btn"
-                    onclick="filterKategori('10', this)">Sticky Milk</button>
+                    onclick="filterKategori('14', this)">Sticky Milk</button>
 
                     </div>
 

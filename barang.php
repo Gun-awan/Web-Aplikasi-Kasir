@@ -8,6 +8,8 @@ header("Expires: 0");
 session_start();
 include 'koneksi.php';
 
+/** @var mysqli $conn */
+
 if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit;
