@@ -64,11 +64,11 @@
 
                     <label>Bayar</label>
                     <input type="text"
-    class="form-control"
-    id="bayar<?php echo $t['id']; ?>"
-    onkeyup="formatRupiah(this); hitungKembalian(<?php echo $t['id']; ?>, <?php echo number_format($t['total']); ?>)"
-    onkeydown="handleEnter(event, <?php echo $t['id']; ?>, <?php echo number_format($t['total']); ?>)"
-    placeholder="Masukkan nominal bayar">
+                        class="form-control"
+                        id="bayar<?php echo $t['id']; ?>"
+                        onkeyup="formatRupiah(this); hitungKembalian(<?php echo $t['id']; ?>, <?php echo $t['total']; ?>)"
+                        onkeydown="handleEnter(event, <?php echo $t['id']; ?>, <?php echo $t['total']; ?>)"
+                        placeholder="Masukkan nominal bayar">
 
                 </div>
 
@@ -120,13 +120,13 @@
 </div>
 
 <script>
-function handleEnter(event, id, total) {
-    if (event.key === "Enter") {
-        event.preventDefault(); // biar ga submit form default
+    function handleEnter(event, id, total) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // biar ga submit form default
 
-        simpanPembayaran(id, total);
+            simpanPembayaran(id, total);
+        }
     }
-}
 </script>
 
 <script>
@@ -188,11 +188,11 @@ function handleEnter(event, id, total) {
             return;
         }
 
-         let konfirmasi = confirm('Yakin, selesaikan pembayaran?');
+        let konfirmasi = confirm('Yakin, selesaikan pembayaran?');
 
-    if (!konfirmasi) {
-        return; // kalau klik Cancel → berhenti
-    }
+        if (!konfirmasi) {
+            return; // kalau klik Cancel → berhenti
+        }
 
         let kembalian = bayar - total;
 
